@@ -47,6 +47,7 @@ a { color: inherit; }
 .top { position: absolute; inset: 0 0 auto; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 22px clamp(16px, 4vw, 44px); }
 .wordmark { font: 800 1.15rem/1 var(--display); font-stretch: 125%; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; }
 .wordmark img { width: 34px; height: auto; }
+.wordmark .ward { color: var(--wing); }
 .top nav { display: flex; align-items: center; gap: clamp(16px, 3vw, 34px); font: 600 .9rem/1 var(--body); }
 .top nav a { text-decoration: none; opacity: .8; }
 .top nav a:hover { opacity: 1; }
@@ -193,7 +194,7 @@ footer a { color: inherit; }
 <header class="top">
   <a class="wordmark" href="#" aria-label="WildWard home">
     <img src="logo-shield.png" alt="" width="34" height="40">
-    WildWard
+    <span>Wild<span class="ward">Ward</span></span>
   </a>
   <nav aria-label="Sections">
     <a href="#mission">Mission</a>
