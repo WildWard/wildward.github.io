@@ -1,0 +1,400 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WildWard</title>
+<meta name="description" content="WildWard builds open-source AI that helps people protect wildlife. First project: recognising the calls of Southeast Asian bats.">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700;112,800;125,800&family=Figtree:ital,wght@0,400;0,600;1,400&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #0a1510;        /* forest floor at night */
+  --canopy: #10291f;       /* deep green */
+  --leaf: #8fbf7a;         /* new growth */
+  --wing: #e9a04b;         /* backlit bat wing */
+  --bone: #eef0ea;         /* text on dark, cool not cream */
+  --fog: #9fb0a6;
+  --ink: #12201a;
+  --paper: #f3f5f1;
+  --display: "Archivo", "Arial Black", sans-serif;
+  --body: "Figtree", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+html { scroll-behavior: smooth; }
+body { margin: 0; background: var(--night); color: var(--bone); font: 400 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--wing); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+.display { font-family: var(--display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; letter-spacing: -.01em; line-height: .92; }
+.eyebrow { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); margin: 0 0 20px; }
+
+/* header */
+.top { position: absolute; inset: 0 0 auto; z-index: 5; display: flex; justify-content: space-between; align-items: center; padding: 22px clamp(16px, 4vw, 44px); }
+.wordmark { font: 800 1.15rem/1 var(--display); font-stretch: 125%; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.wordmark svg { width: 26px; height: 26px; }
+.top nav { display: flex; gap: clamp(16px, 3vw, 34px); font: 600 .9rem/1 var(--body); }
+.top nav a { text-decoration: none; opacity: .8; }
+.top nav a:hover { opacity: 1; }
+.top .cta { border: 1.5px solid var(--bone); padding: 10px 16px; border-radius: 99px; opacity: 1; }
+
+/* hero: a real Philippine-region bat, in the dark, where we work */
+.hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; overflow: hidden; background: #000; }
+.hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 40%; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.75)), linear-gradient(0deg, rgba(10,21,16,1) 0%, rgba(10,21,16,0) 30%); }
+.hero-copy { position: relative; z-index: 2; align-self: center; justify-self: end; width: min(780px, 58vw); padding: 120px clamp(16px, 5vw, 64px) 40px; }
+.hero h1 { font-size: clamp(2.6rem, 5vw, 5rem); margin: 0 0 24px; }
+.hero h1 span { color: var(--wing); }
+.hero .lead { font-size: clamp(1.1rem, 1.5vw, 1.3rem); margin: 0 0 32px; color: #dfe5df; max-width: 30rem; }
+.btn { display: inline-flex; align-items: center; gap: 10px; background: var(--wing); color: var(--ink); font: 600 1rem/1 var(--body); padding: 16px 24px; border-radius: 99px; text-decoration: none; transition: transform .2s; }
+.btn:hover { transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--bone); border: 1.5px solid rgba(238,240,234,.6); margin-left: 10px; }
+
+/* the listening strip: a live spectrogram along the bottom of the hero */
+.listen { position: relative; z-index: 2; height: 120px; border-top: 1px solid rgba(233,160,75,.25); }
+.listen canvas { width: 100%; height: 100%; display: block; }
+.listen-label { position: absolute; left: clamp(16px, 4vw, 44px); right: 16px; bottom: 10px; background: linear-gradient(90deg, rgba(10,21,16,.9), rgba(10,21,16,0)); padding: 4px 0; font: 500 .66rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fog); }
+.listen-label b { color: var(--wing); font-weight: 500; }
+
+/* mission */
+.mission { background: var(--night); padding: clamp(96px, 16vh, 180px) 0 clamp(72px, 12vh, 140px); }
+.mission h2 { font-size: clamp(2.2rem, 5.2vw, 4.6rem); margin: 0; max-width: 16ch; }
+.mission h2 em { font-style: normal; color: var(--leaf); }
+.mission-row { display: grid; grid-template-columns: 1.4fr 1fr; gap: clamp(32px, 6vw, 96px); align-items: end; }
+.mission-row > p { margin: 0; font-size: 1.15rem; color: #cdd6cf; }
+
+/* why bats: split with photo */
+.why { background: var(--canopy); }
+.split { display: grid; grid-template-columns: 1fr 1fr; min-height: 640px; }
+.split figure { margin: 0; position: relative; overflow: hidden; }
+.split figure img { width: 100%; height: 100%; object-fit: cover; }
+.split figcaption { position: absolute; left: 16px; bottom: 14px; font: 400 .64rem/1.4 var(--mono); color: rgba(255,255,255,.85); text-shadow: 0 1px 4px rgba(0,0,0,.6); }
+.split .text { padding: clamp(56px, 9vw, 120px) clamp(24px, 6vw, 88px); align-self: center; }
+.split h2 { font-size: clamp(2rem, 4vw, 3.4rem); margin: 0 0 24px; }
+.facts { display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; margin-top: 40px; padding-top: 28px; border-top: 1px solid rgba(143,191,122,.3); }
+.facts strong { display: block; font: 800 clamp(2rem, 3.4vw, 2.8rem)/1 var(--display); font-stretch: 112%; color: var(--leaf); margin-bottom: 8px; }
+.facts span { font-size: .92rem; color: #c3d0c6; display: block; line-height: 1.4; }
+
+/* project 1 */
+.project { background: var(--night); padding: clamp(96px, 14vh, 160px) 0; }
+.project-grid { display: grid; grid-template-columns: 1fr 1.1fr; gap: clamp(40px, 6vw, 96px); align-items: start; }
+.project-grid > * { min-width: 0; }
+.project h2 { font-size: clamp(2rem, 4.2vw, 3.6rem); margin: 0 0 24px; }
+.project p { color: #cdd6cf; max-width: 34rem; }
+.pillars { list-style: none; padding: 0; margin: 36px 0 0; display: grid; gap: 18px; }
+.pillars li { padding-left: 22px; position: relative; }
+.pillars li::before { content: ""; position: absolute; left: 0; top: .62em; width: 10px; height: 10px; border-radius: 50%; background: var(--wing); }
+.pillars b { color: var(--bone); }
+.result { background: #0f1f18; border: 1px solid #1f3a2d; border-radius: 14px; padding: 26px; }
+.result-head { display: flex; align-items: baseline; gap: 16px; flex-wrap: wrap; margin-bottom: 18px; }
+.result-head strong { font: 800 3.4rem/1 var(--display); font-stretch: 112%; color: var(--wing); }
+.result-head span { color: var(--fog); font-size: .95rem; max-width: 24ch; line-height: 1.35; }
+table { width: 100%; border-collapse: collapse; font: 400 .74rem/1.35 var(--mono); }
+th { text-align: left; font-weight: 500; color: var(--fog); padding: 0 8px 10px 0; border-bottom: 1px solid #1f3a2d; }
+td { padding: 8px 8px 8px 0; border-bottom: 1px solid #172d22; vertical-align: top; }
+td.sp { font: italic 400 .92rem/1.3 var(--body); color: var(--bone); }
+td.miss { color: #6f8478; }
+td.wrong { color: #f08a7a; }
+.note { font: 400 .68rem/1.5 var(--mono); color: #7f9488; margin: 14px 0 0; }
+
+/* every species next: full-bleed */
+.next { position: relative; min-height: 88svh; display: grid; align-items: end; overflow: hidden; }
+.next { background: var(--night); }
+.next img { position: absolute; top: 0; right: 0; width: 60%; height: 100%; object-fit: cover; object-position: 42% 45%; }
+.next::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, var(--night) 0%, var(--night) 40%, rgba(10,21,16,.6) 47%, rgba(10,21,16,0) 58%); }
+.next h2, .next p { max-width: 42%; }
+.next h2 { font-size: clamp(2.4rem, 5vw, 5rem); }
+.next .wrap { position: relative; z-index: 2; padding-block: clamp(48px, 9vh, 100px); align-self: center; }
+.next h2 { font-size: clamp(2.6rem, 7vw, 6.4rem); margin: 0 0 18px; }
+.next h2 span { color: var(--leaf); }
+.next p:not(.eyebrow) { margin: 0; max-width: 36rem; font-size: 1.15rem; color: #dfe5df; }
+.next .credit { position: absolute; right: 16px; top: 16px; z-index: 2; font: 400 .62rem/1.4 var(--mono); color: rgba(255,255,255,.75); }
+
+/* roadmap: a real sequence */
+.road { background: var(--night); padding: clamp(80px, 12vh, 140px) 0; }
+.road h2 { font-size: clamp(1.8rem, 3.4vw, 2.8rem); margin: 0 0 48px; }
+.road ol { list-style: none; padding: 0; margin: 0; display: grid; grid-template-columns: repeat(4, 1fr); border-top: 2px solid #1f3a2d; }
+.road li { position: relative; padding: 26px 20px 0 0; }
+.road li::before { content: ""; position: absolute; top: -8px; left: 0; width: 14px; height: 14px; border-radius: 50%; background: var(--night); border: 2px solid #3d5b4b; }
+.road li.now::before { background: var(--wing); border-color: var(--wing); box-shadow: 0 0 0 7px rgba(233,160,75,.18); }
+.road .when { font: 500 .68rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fog); }
+.road li.now .when { color: var(--wing); }
+.road h3 { font: 800 1.2rem/1.1 var(--display); font-stretch: 112%; text-transform: uppercase; margin: 10px 0 8px; }
+.road p { margin: 0; font-size: .95rem; color: #a9b8ae; }
+
+/* founder + contact on paper */
+.paper { background: var(--paper); color: var(--ink); }
+.founder { padding: clamp(96px, 14vh, 160px) 0 clamp(64px, 10vh, 110px); }
+.founder-grid { display: grid; grid-template-columns: 340px 1fr; gap: clamp(36px, 6vw, 90px); align-items: center; }
+.founder-grid > * { min-width: 0; }
+.founder img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 18px; }
+.founder .eyebrow { color: #3f6b3a; }
+.founder h2 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); margin: 0 0 20px; }
+.founder p { max-width: 38rem; color: #2f3d36; }
+.contact { padding-bottom: clamp(96px, 14vh, 150px); }
+.contact-card { background: var(--canopy); color: var(--bone); border-radius: 22px; padding: clamp(36px, 6vw, 72px); display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; }
+.contact-card h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); margin: 0 0 14px; }
+.contact-card p { margin: 0; color: #cdd6cf; max-width: 30rem; }
+.contact-actions { display: flex; flex-direction: column; gap: 14px; align-items: flex-start; }
+.contact-actions .btn { font-size: 1.05rem; }
+.contact-actions a.plain { font: 500 .85rem/1 var(--mono); text-decoration: none; border-bottom: 1px solid currentColor; padding-bottom: 3px; color: var(--fog); }
+footer { background: var(--paper); color: #56645c; padding: 0 0 48px; font: 400 .66rem/1.7 var(--mono); }
+footer .wrap { border-top: 1px solid #d3dad2; padding-top: 28px; display: grid; grid-template-columns: 1fr 2fr; gap: 24px; }
+footer p { margin: 0 0 6px; }
+footer a { color: inherit; }
+
+@media (max-width: 900px) {
+  .mission-row, .split, .project-grid, .founder-grid, .contact-card, footer .wrap { grid-template-columns: 1fr; }
+  .split figure { height: 60vh; }
+  .split .text { padding-inline: 16px; }
+  .road ol { grid-template-columns: 1fr 1fr; row-gap: 32px; }
+  .founder img { max-width: 300px; }
+  .hero-copy { justify-self: stretch; align-self: end; width: 100%; padding-bottom: 28px; }
+  .next img { width: 100%; height: 62%; }
+  .next .wrap { align-self: end; }
+  .next h2, .next p { max-width: none; }
+  .next::after { background: linear-gradient(0deg, rgba(10,21,16,.95) 0%, rgba(10,21,16,.5) 50%, rgba(10,21,16,0) 75%); }
+  .hero::after { background: linear-gradient(0deg, rgba(10,21,16,1) 0%, rgba(0,0,0,.6) 45%, rgba(0,0,0,.1) 75%); }
+}
+@media (max-width: 560px) {
+  .top nav a:not(.cta) { display: none; }
+  .facts { grid-template-columns: 1fr; gap: 18px; }
+  .road ol { grid-template-columns: 1fr; border-top: 0; border-left: 2px solid #1f3a2d; row-gap: 28px; }
+  .road li { padding: 0 0 0 26px; }
+  .road li::before { top: 2px; left: -8px; }
+  .btn-ghost { margin: 12px 0 0; }
+  .listen { height: 96px; }
+}
+@media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="wordmark" href="#" aria-label="WildWard home">
+    <svg viewBox="0 0 32 32" aria-hidden="true"><path d="M16 2 4 7v8c0 7.4 5.1 13.6 12 15 6.9-1.4 12-7.6 12-15V7L16 2z" fill="none" stroke="#e9a04b" stroke-width="2.2"/><path d="M8.5 15.5c2.2-1.6 4.4-1.4 5.6.6.6-1 1.2-1.6 1.9-1.6s1.3.6 1.9 1.6c1.2-2 3.4-2.2 5.6-.6-1.5.2-2.6 1.1-3.3 2.6-1.4-.9-2.8-.7-3.7.8-.2-.6-.3-.9-.5-.9s-.3.3-.5.9c-.9-1.5-2.3-1.7-3.7-.8-.7-1.5-1.8-2.4-3.3-2.6z" fill="#eef0ea"/></svg>
+    WildWard
+  </a>
+  <nav aria-label="Sections">
+    <a href="#mission">Mission</a>
+    <a href="#bats">Projects</a>
+    <a href="#founder">About</a>
+    <a class="cta" href="#contact">Contact</a>
+  </nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="hero-title">
+    <img src="img/diadema.jpg" alt="A diadem leaf-nosed bat in flight at night, wings spread" width="2000" height="1333" fetchpriority="high">
+    <div class="hero-copy">
+      <p class="eyebrow">Open-source AI for wildlife</p>
+      <h1 id="hero-title" class="display">Protecting the wild by <span>listening</span> to it.</h1>
+      <p class="lead">Most of the forest's life happens at night, in sounds people can't hear. WildWard builds AI that hears it, so the people protecting wildlife can act.</p>
+      <a class="btn" href="#bats">See our first project</a><a class="btn btn-ghost" href="#mission">Our mission</a>
+    </div>
+    <div class="listen" aria-hidden="true">
+      <canvas id="spectro"></canvas>
+      <span class="listen-label">Bat calls, illustrated · <b>above the dashed line, common bat AI hears nothing</b></span>
+    </div>
+  </section>
+
+  <section class="mission" id="mission" aria-labelledby="mission-title">
+    <div class="wrap mission-row">
+      <div>
+        <p class="eyebrow">Mission</p>
+        <h2 id="mission-title" class="display">Technology that works <em>for</em> wildlife, not just about it.</h2>
+      </div>
+      <p>Rangers, researchers and small conservation groups collect huge amounts of recordings and photos, then run out of hours to go through them. We build free, offline AI tools that do that work, starting where the need is clearest and the tools are missing.</p>
+    </div>
+  </section>
+
+  <section class="why" aria-labelledby="why-title">
+    <div class="split">
+      <figure>
+        <img src="img/foxes.jpg" alt="A giant golden-crowned flying fox gliding with its wings fully spread against a blue sky" width="2000" height="1199" loading="lazy">
+        <figcaption>Giant golden-crowned flying fox. Photo: Luke Marcos Imbong, CC BY-SA 4.0</figcaption>
+      </figure>
+      <div class="text">
+        <p class="eyebrow">Why bats first</p>
+        <h2 id="why-title" class="display">The forest's night shift has no one counting it.</h2>
+        <p>Bats pollinate, spread seeds and eat tonnes of insects every night. Southeast Asia is one of the richest bat regions on Earth, and many of its species live nowhere else. Yet across much of the region, scientists still identify bat calls by hand, because no software knows their species.</p>
+        <div class="facts">
+          <div><strong>390+</strong><span>bat species in Southeast Asia</span></div>
+          <div><strong>120 kHz</strong><span>where common bat AI stops listening. Many Asian bats call higher.</span></div>
+          <div><strong>0/12</strong><span>Southeast Asian bats named right by a leading free tool in our test</span></div>
+        </div>
+      </div>
+    </div>
+  </section>
+
+  <section class="project" id="bats" aria-labelledby="bats-title">
+    <div class="wrap project-grid">
+      <div>
+        <p class="eyebrow">Project 1 · Southeast Asian bat calls</p>
+        <h2 id="bats-title" class="display">AI that knows Asia's bats</h2>
+        <p>Today's bat AI was trained on European and American bats. We tested a leading free model on twelve recordings of Malaysian bats from the ChiroVox library, species that also range across Indonesia, Thailand, the Philippines and beyond. It didn't name a single one correctly.</p>
+        <ul class="pillars">
+          <li><b>Works offline.</b> Runs on a laptop at a field station, no internet needed.</li>
+          <li><b>Learns local species.</b> Trained on recordings that local experts identified.</li>
+          <li><b>Open and fair.</b> Free to use. Researchers keep ownership of their data.</li>
+        </ul>
+      </div>
+      <figure class="result" aria-labelledby="result-cap" style="margin:0">
+        <div class="result-head">
+          <strong>0 of 12</strong>
+          <span id="result-cap">species named correctly by BatDetect2 v1.3.1 (Oct 2026)</span>
+        </div>
+        <table>
+          <thead><tr><th scope="col">Recorded species</th><th scope="col">Calls found</th><th scope="col">Its guess</th></tr></thead>
+          <tbody>
+            <tr><td class="sp">Rhinolophus creaghi (2)</td><td class="miss">0</td><td class="miss">nothing</td></tr>
+            <tr><td class="sp">Hipposideros dyacorum</td><td class="miss">0</td><td class="miss">nothing</td></tr>
+            <tr><td class="sp">Hipposideros bicolor</td><td>8</td><td class="wrong">Nyctalus leisleri</td></tr>
+            <tr><td class="sp">Miniopterus australis (2)</td><td class="miss">0</td><td class="miss">nothing</td></tr>
+            <tr><td class="sp">Kerivoula hardwickii</td><td class="miss">0</td><td class="miss">nothing</td></tr>
+            <tr><td class="sp">Kerivoula minuta</td><td>16</td><td class="wrong">Nyctalus leisleri</td></tr>
+            <tr><td class="sp">Murina suilla</td><td class="miss">0</td><td class="miss">nothing</td></tr>
+            <tr><td class="sp">Murina rozendaali</td><td>13</td><td class="wrong">Eptesicus serotinus</td></tr>
+            <tr><td class="sp">Myotis horsfieldii</td><td>29</td><td class="wrong">Myotis bechsteinii</td></tr>
+            <tr><td class="sp">Myotis muricola</td><td>25</td><td class="wrong">Myotis alcathoe</td></tr>
+          </tbody>
+        </table>
+        <p class="note">Every guess is a European species, because that's what the model learned. It was never built for Asia. Small test, default settings.</p>
+      </figure>
+    </div>
+  </section>
+
+  <section class="next" aria-labelledby="next-title">
+    <img src="img/tarsier.jpg" alt="A Philippine tarsier with huge round eyes clinging to a branch among green leaves" width="2000" height="1333" loading="lazy">
+    <span class="credit">Philippine tarsier. Photo: Charles J. Sharp, CC BY-SA 4.0</span>
+    <div class="wrap">
+      <p class="eyebrow">What comes after</p>
+      <h2 id="next-title" class="display">Bats first.<br><span>Every species next.</span></h2>
+      <p>The same approach works for any animal that can be heard or seen: frogs, birds, primates, and the poachers who hunt them. Each tool we build makes the next one faster.</p>
+    </div>
+  </section>
+
+  <section class="road" aria-labelledby="road-title">
+    <div class="wrap">
+      <p class="eyebrow">Where we are</p>
+      <h2 id="road-title" class="display">The road to the field</h2>
+      <ol>
+        <li class="now"><span class="when">Now</span><h3>Test the models</h3><p>Measure how today's tools handle Asian bat calls.</p></li>
+        <li><span class="when">Next</span><h3>Find partners</h3><p>Team up with researchers who hold identified recordings.</p></li>
+        <li><span class="when">Then</span><h3>Train and check</h3><p>Build a classifier for Southeast Asian species and publish the accuracy openly.</p></li>
+        <li><span class="when">Later</span><h3>Into the field</h3><p>Put it to work on real surveys across Southeast Asia.</p></li>
+      </ol>
+    </div>
+  </section>
+
+  <div class="paper">
+    <section class="founder" id="founder" aria-labelledby="founder-title">
+      <div class="wrap founder-grid">
+        <img src="antal.jpg" alt="Antal Kiss, founder of WildWard, in a forest" width="600" height="600" loading="lazy">
+        <div>
+          <p class="eyebrow">Founder</p>
+          <h2 id="founder-title" class="display">Antal Kiss</h2>
+          <p>I'm Hungarian, I live in the Netherlands, and I'm working my way to Southeast Asia. I don't come from biology. I come from building software, and I want to put it to work for something that matters: protecting wild animals.</p>
+          <p>WildWard is where that work lives. Bats come first because the gap is clear and the people studying them need help now.</p>
+        </div>
+      </div>
+    </section>
+
+    <section class="contact" id="contact" aria-labelledby="contact-title">
+      <div class="wrap">
+        <div class="contact-card">
+          <div>
+            <h2 id="contact-title" class="display">Work with us</h2>
+            <p>Researchers, NGOs, and anyone with bat recordings from Southeast Asia: tell us what slows your work down. We reply within a few days.</p>
+          </div>
+          <div class="contact-actions">
+            <a class="btn" href="mailto:wildward.org@gmail.com">Email wildward.org@gmail.com</a>
+            <a class="plain" href="https://github.com/antal-kiss">github.com/antal-kiss</a>
+          </div>
+        </div>
+      </div>
+    </section>
+  </div>
+</main>
+
+<footer>
+  <div class="wrap">
+    <div><p>© 2026 WildWard</p><p>Made in the Netherlands</p></div>
+    <div>
+      <p>Photos: diadem leaf-nosed bat by Michael Pennay (<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>); giant golden-crowned flying fox by Luke Marcos Imbong (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>); Philippine tarsier by Charles J. Sharp (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>). All via Wikimedia Commons, resized.</p>
+      <p>Test recordings: ChiroVox, used for non-commercial research only and not redistributed. Görföl et al. 2022, PeerJ 10:e12445. The spectrogram strip is an illustration, not a recording.</p>
+    </div>
+  </div>
+</footer>
+
+<script>
+(() => {
+  const canvas = document.getElementById("spectro");
+  const ctx = canvas.getContext("2d");
+  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
+  const MAX_KHZ = 190, LIMIT_KHZ = 120;
+  let w, h, calls = [], last = 0;
+  // simplified call families: FM sweeps (Myotis, Kerivoula, Miniopterus) and CF calls (Rhinolophus, Hipposideros)
+  const kinds = [
+    { type: "fm", top: 110, bottom: 38, len: 7 },
+    { type: "fm", top: 175, bottom: 85, len: 5 },
+    { type: "fm", top: 72, bottom: 46, len: 12 },
+    { type: "cf", f: 150, len: 28 },
+    { type: "cf", f: 162, len: 44 },
+    { type: "cf", f: 92, len: 32 },
+  ];
+  const streams = [kinds, kinds.filter(k => (k.f || k.top) > LIMIT_KHZ)];
+  const ends = [0, 0];
+
+  function resize() {
+    const dpr = Math.min(devicePixelRatio || 1, 2);
+    w = canvas.clientWidth; h = canvas.clientHeight;
+    canvas.width = w * dpr; canvas.height = h * dpr;
+    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
+  }
+  const yOf = khz => h * 0.9 - (khz / MAX_KHZ) * h * 0.72;
+  function spawn(x, pool) {
+    const k = pool[Math.floor(Math.random() * pool.length)];
+    const n = 4 + Math.floor(Math.random() * 6), gap = k.len + 12 + Math.random() * 18, shift = (Math.random() - .5) * 8;
+    for (let i = 0; i < n; i++) {
+      const a = .5 + .5 * Math.sin(Math.PI * (i + 1) / (n + 1));
+      calls.push({ ...k, f: k.f && k.f + shift, top: k.top && k.top + shift, bottom: k.bottom && k.bottom + shift, x: x + i * gap, a });
+    }
+    return x + n * gap;
+  }
+  function color(a) { return `rgba(${Math.round(200 + 33 * a)},${Math.round(110 + 50 * a)},${Math.round(60 + 15 * a)},${.35 + .65 * a})`; }
+  function draw(c) {
+    ctx.strokeStyle = color(c.a); ctx.lineCap = "round"; ctx.shadowColor = "rgba(233,160,75,.6)"; ctx.shadowBlur = 6 * c.a;
+    ctx.beginPath();
+    if (c.type === "fm") {
+      ctx.lineWidth = 1.8;
+      for (let s = 0; s <= 10; s++) { const t = s / 10, f = c.top - (c.top - c.bottom) * Math.pow(t, .6); s ? ctx.lineTo(c.x + c.len * t, yOf(f)) : ctx.moveTo(c.x, yOf(f)); }
+    } else {
+      ctx.lineWidth = 2.4; ctx.moveTo(c.x, yOf(c.f)); ctx.lineTo(c.x + c.len, yOf(c.f)); ctx.lineTo(c.x + c.len + 5, yOf(c.f - 12));
+    }
+    ctx.stroke();
+  }
+  function frame(t) {
+    const dt = Math.min(50, t - last || 16); last = t;
+    const dx = still ? 0 : dt * .04;
+    ctx.clearRect(0, 0, w, h);
+    for (const c of calls) { c.x -= dx; draw(c); }
+    ctx.shadowBlur = 0;
+    calls = calls.filter(c => c.x + c.len > -20);
+    streams.forEach((pool, i) => { ends[i] -= dx; while (ends[i] < w + 200) ends[i] = spawn(ends[i] + 60 + Math.random() * 160, pool); });
+    const ly = yOf(LIMIT_KHZ);
+    ctx.setLineDash([5, 6]); ctx.strokeStyle = "rgba(233,160,75,.7)"; ctx.lineWidth = 1;
+    ctx.beginPath(); ctx.moveTo(0, ly); ctx.lineTo(w, ly); ctx.stroke(); ctx.setLineDash([]);
+    if (!still) requestAnimationFrame(frame);
+  }
+  resize();
+  streams.forEach((pool, i) => { let x = 20 + i * 90; while (x < w + 200) x = spawn(x, pool) + 60 + Math.random() * 160; ends[i] = x; });
+  addEventListener("resize", () => { resize(); if (still) frame(0); });
+  requestAnimationFrame(frame);
+})();
+</script>
+</body>
+</html>
