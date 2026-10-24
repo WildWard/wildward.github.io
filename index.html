@@ -105,6 +105,15 @@ td.sp { font: italic 400 .92rem/1.3 var(--body); color: var(--bone); }
 td.miss { color: #6f8478; }
 td.wrong { color: #f08a7a; }
 .note { font: 400 .68rem/1.5 var(--mono); color: #7f9488; margin: 14px 0 0; }
+.findings { margin-top: clamp(64px, 10vh, 110px); padding-top: clamp(40px, 6vh, 64px); border-top: 1px solid #1f3a2d; }
+.findings-intro { max-width: 46rem; }
+.findings h3 { font-size: clamp(1.6rem, 3vw, 2.5rem); margin: 0 0 18px; }
+.findings-intro p:not(.eyebrow) { color: #cdd6cf; margin: 0; }
+.findings-grid { display: grid; grid-template-columns: repeat(3, 1fr); gap: 18px; margin-top: 36px; }
+.finding { background: #0f1f18; border: 1px solid #1f3a2d; border-radius: 14px; padding: 26px 24px; }
+.finding strong { display: block; font: 800 clamp(2.6rem, 5vw, 3.6rem)/1 var(--display); font-stretch: 112%; color: var(--leaf); margin-bottom: 10px; }
+.finding.honest strong { color: var(--wing); }
+.finding span { color: #c3d0c6; font-size: .98rem; line-height: 1.45; display: block; }
 
 /* every species next: full-bleed */
 .next { position: relative; min-height: 88svh; display: grid; align-items: end; overflow: hidden; }
@@ -128,6 +137,8 @@ td.wrong { color: #f08a7a; }
 .road li.now::before { background: var(--wing); border-color: var(--wing); box-shadow: 0 0 0 7px rgba(233,160,75,.18); }
 .road .when { font: 500 .68rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fog); }
 .road li.now .when { color: var(--wing); }
+.road li.done::before { background: var(--leaf); border-color: var(--leaf); }
+.road li.done .when { color: var(--leaf); }
 .road h3 { font: 800 1.2rem/1.1 var(--display); font-stretch: 112%; text-transform: uppercase; margin: 10px 0 8px; }
 .road p { margin: 0; font-size: .95rem; color: #a9b8ae; }
 
@@ -154,7 +165,7 @@ footer p { margin: 0 0 6px; }
 footer a { color: inherit; }
 
 @media (max-width: 900px) {
-  .mission-row, .split, .project-grid, .founder-grid, .contact-card, footer .wrap { grid-template-columns: 1fr; }
+  .mission-row, .split, .project-grid, .founder-grid, .contact-card, footer .wrap, .findings-grid { grid-template-columns: 1fr; }
   .split figure { height: 60vh; }
   .split .text { padding-inline: 16px; }
   .road ol { grid-template-columns: 1fr 1fr; row-gap: 32px; }
@@ -267,6 +278,20 @@ footer a { color: inherit; }
         <p class="note">Every guess is a European species, because that's what the model learned. It was never built for Asia. Small test, default settings.</p>
       </figure>
     </div>
+
+    <div class="wrap findings" aria-labelledby="findings-title">
+      <div class="findings-intro">
+        <p class="eyebrow">First result · Oct 2026</p>
+        <h3 id="findings-title" class="display">A bird AI learned Asian bats from ten examples each</h3>
+        <p>We slowed the ultrasonic calls down twelve times, so Google's Perch 2.0, a model trained on birdsong, could hear them. Then we trained a small classifier on top: 237 recordings, 21 Southeast Asian species, about ten recordings per species.</p>
+      </div>
+      <div class="findings-grid">
+        <div class="finding"><strong>74%</strong><span>of recordings named to the right species, out of 21. Random guessing gets 5%.</span></div>
+        <div class="finding"><strong>88%</strong><span>named to the right genus.</span></div>
+        <div class="finding honest"><strong>36%</strong><span>on recording sites the model never saw. To work in the field, it needs recordings from many more places. That's where partners come in.</span></div>
+      </div>
+      <p class="note">Recording-level cross-validation, no recording used for both training and testing. ChiroVox data used locally for non-commercial research. Full method and caveats on request, code to be published openly.</p>
+    </div>
   </section>
 
   <section class="next" aria-labelledby="next-title">
@@ -284,8 +309,8 @@ footer a { color: inherit; }
       <p class="eyebrow">Where we are</p>
       <h2 id="road-title" class="display">The road to the field</h2>
       <ol>
-        <li class="now"><span class="when">Now</span><h3>Test the models</h3><p>Measure how today's tools handle Asian bat calls.</p></li>
-        <li><span class="when">Next</span><h3>Find partners</h3><p>Team up with researchers who hold identified recordings.</p></li>
+        <li class="done"><span class="when">Done</span><h3>Test the models</h3><p>Today's tools: 0 of 12. Our first approach: 74% on 21 species.</p></li>
+        <li class="now"><span class="when">Now</span><h3>Find partners</h3><p>Team up with researchers who hold identified recordings from many sites.</p></li>
         <li><span class="when">Then</span><h3>Train and check</h3><p>Build a classifier for Southeast Asian species and publish the accuracy openly.</p></li>
         <li><span class="when">Later</span><h3>Into the field</h3><p>Put it to work on real surveys across Southeast Asia.</p></li>
       </ol>
