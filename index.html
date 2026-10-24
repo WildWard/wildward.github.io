@@ -286,11 +286,11 @@ footer a { color: inherit; }
         <p>We slowed the ultrasonic calls down twelve times, so Google's Perch 2.0, a model trained on birdsong, could hear them. Then we trained a small classifier on top: 237 recordings, 21 Southeast Asian species, about ten recordings per species.</p>
       </div>
       <div class="findings-grid">
-        <div class="finding"><strong>74%</strong><span>of recordings named to the right species, out of 21. Random guessing gets 5%.</span></div>
-        <div class="finding"><strong>88%</strong><span>named to the right genus.</span></div>
-        <div class="finding honest"><strong>36%</strong><span>on recording sites the model never saw. To work in the field, it needs recordings from many more places. That's where partners come in.</span></div>
+        <div class="finding"><strong>81%</strong><span>of recordings named to the right species, out of 21. Random guessing gets 5%.</span></div>
+        <div class="finding"><strong>92%</strong><span>named to the right genus.</span></div>
+        <div class="finding honest"><strong>53%</strong><span>species right on recording sites the model never saw (84% genus). To work in the field, it needs recordings from many more places. That's where partners come in.</span></div>
       </div>
-      <p class="note">Recording-level cross-validation, no recording used for both training and testing. ChiroVox data used locally for non-commercial research. Code, method and caveats: <a href="https://github.com/WildWard/batlab">github.com/WildWard/batlab</a>.</p>
+      <p class="note">Recording-level cross-validation, no recording used for both training and testing. Updated 24 Oct 2026 after fixing how slowed-down (time-expanded) files were read; all scores went up. ChiroVox data used locally for non-commercial research. Code, method and caveats: <a href="https://github.com/WildWard/batlab">github.com/WildWard/batlab</a>.</p>
     </div>
   </section>
 
@@ -309,7 +309,7 @@ footer a { color: inherit; }
       <p class="eyebrow">Where we are</p>
       <h2 id="road-title" class="display">The road to the field</h2>
       <ol>
-        <li class="done"><span class="when">Done</span><h3>Test the models</h3><p>Today's tools: 0 of 12. Our first approach: 74% on 21 species.</p></li>
+        <li class="done"><span class="when">Done</span><h3>Test the models</h3><p>Today's tools: 0 of 12. Our first approach: 81% on 21 species.</p></li>
         <li class="now"><span class="when">Now</span><h3>Find partners</h3><p>Team up with researchers who hold identified recordings from many sites.</p></li>
         <li><span class="when">Then</span><h3>Train and check</h3><p>Build a classifier for Southeast Asian species and publish the accuracy openly.</p></li>
         <li><span class="when">Later</span><h3>Into the field</h3><p>Put it to work on real surveys across Southeast Asia.</p></li>
