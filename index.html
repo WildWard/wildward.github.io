@@ -285,13 +285,13 @@ footer a { color: inherit; }
     <div class="wrap findings" aria-labelledby="findings-title">
       <div class="findings-intro">
         <p class="eyebrow">First result · Oct 2026</p>
-        <h3 id="findings-title" class="display">A bird AI learned Asian bats from ten examples each</h3>
-        <p>We slowed the ultrasonic calls down twelve times, so Google's Perch 2.0, a model trained on birdsong, could hear them. Then we trained a small classifier on top: 237 recordings, 21 Southeast Asian species, about ten recordings per species.</p>
+        <h3 id="findings-title" class="display">A bird AI learned 34 Asian bat species from ten examples each</h3>
+        <p>We slowed the ultrasonic calls down twelve times, so Google's Perch 2.0, a model trained on birdsong, could hear them. Then we trained a small classifier on top: 319 recordings of 34 species from 66 sites in Vietnam, Malaysia and Indonesia, about ten recordings per species.</p>
       </div>
       <div class="findings-grid">
-        <div class="finding"><strong>81%</strong><span>of recordings named to the right species, out of 21. Random guessing gets 5%.</span></div>
-        <div class="finding"><strong>92%</strong><span>named to the right genus.</span></div>
-        <div class="finding honest"><strong>53%</strong><span>species right on recording sites the model never saw (84% genus). To work in the field, it needs recordings from many more places. That's where partners come in.</span></div>
+        <div class="finding"><strong>78%</strong><span>of recordings named to the right species, out of 34. Random guessing gets 3%.</span></div>
+        <div class="finding"><strong>91%</strong><span>named to the right genus.</span></div>
+        <div class="finding honest"><strong>62%</strong><span>species right on recording sites the model never heard (86% genus), up from 53% when we had fewer sites. More places means better AI. That's where partners come in.</span></div>
       </div>
       <p class="note">Recording-level cross-validation, no recording used for both training and testing. Updated 24 Oct 2026 after fixing how slowed-down (time-expanded) files were read; all scores went up. ChiroVox data used locally for non-commercial research. Code, method and caveats: <a href="https://github.com/WildWard/batlab">github.com/WildWard/batlab</a>.</p>
     </div>
@@ -312,7 +312,7 @@ footer a { color: inherit; }
       <p class="eyebrow">Where we are</p>
       <h2 id="road-title" class="display">The road to the field</h2>
       <ol>
-        <li class="done"><span class="when">Done</span><h3>Test the models</h3><p>Today's tools: 0 of 12. Our first approach: 81% on 21 species.</p></li>
+        <li class="done"><span class="when">Done</span><h3>Test the models</h3><p>Today's tools: 0 of 12. Ours: 78% on 34 species from 66 sites.</p></li>
         <li class="done"><span class="when">Done</span><h3>Build the tool</h3><p>WildWard Listen: finds, measures and groups every call, offline and free.</p></li>
         <li class="now"><span class="when">Now</span><h3>Find partners</h3><p>Team up with researchers who hold identified recordings from many sites.</p></li>
         <li><span class="when">Then</span><h3>Train and check</h3><p>Build a classifier for Southeast Asian species and publish the accuracy openly.</p></li>
