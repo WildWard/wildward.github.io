@@ -110,7 +110,7 @@ td.wrong { color: #f08a7a; }
 .next .wrap { position: relative; z-index: 2; padding-block: clamp(48px, 9vh, 100px); align-self: center; }
 .next h2 { font-size: clamp(2.6rem, 7vw, 6.4rem); margin: 0 0 18px; }
 .next h2 span { color: var(--leaf); }
-.next p:not(.eyebrow) { margin: 0; max-width: 36rem; font-size: 1.15rem; color: #dfe5df; }
+.next p:not(.eyebrow) { margin: 0; max-width: min(36rem, 38%); font-size: 1.15rem; color: #dfe5df; }
 .next .credit { position: absolute; right: 16px; top: 16px; z-index: 2; font: 400 .62rem/1.4 var(--mono); color: rgba(255,255,255,.75); }
 
 /* roadmap: a real sequence */
@@ -155,7 +155,7 @@ footer a { color: inherit; }
   .hero-copy { justify-self: stretch; align-self: end; width: 100%; padding-bottom: 28px; }
   .next img { width: 100%; height: 62%; }
   .next .wrap { align-self: end; }
-  .next h2, .next p { max-width: none; }
+  .next h2, .next p, .next p:not(.eyebrow) { max-width: none; }
   .next::after { background: linear-gradient(0deg, rgba(10,21,16,.95) 0%, rgba(10,21,16,.5) 50%, rgba(10,21,16,0) 75%); }
   .hero::after { background: linear-gradient(0deg, rgba(10,21,16,1) 0%, rgba(0,0,0,.6) 45%, rgba(0,0,0,.1) 75%); }
 }
