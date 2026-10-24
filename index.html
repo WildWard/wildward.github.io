@@ -130,10 +130,11 @@ td.wrong { color: #f08a7a; }
 .founder { padding: clamp(96px, 14vh, 160px) 0 clamp(64px, 10vh, 110px); }
 .founder-grid { display: grid; grid-template-columns: 340px 1fr; gap: clamp(36px, 6vw, 90px); align-items: center; }
 .founder-grid > * { min-width: 0; }
-.founder img { width: 100%; aspect-ratio: 1; object-fit: cover; border-radius: 18px; }
+.founder img { width: 100%; height: auto; aspect-ratio: 1; object-fit: cover; border-radius: 18px; }
 .founder .eyebrow { color: #3f6b3a; }
 .founder h2 { font-size: clamp(2.2rem, 4.6vw, 3.8rem); margin: 0 0 20px; }
 .founder p { max-width: 38rem; color: #2f3d36; }
+.founder .quote { font: 600 clamp(1.25rem, 2vw, 1.55rem)/1.35 var(--body); color: var(--ink); border-left: 3px solid var(--wing); padding-left: 18px; margin: 0 0 24px; }
 .contact { padding-bottom: clamp(96px, 14vh, 150px); }
 .contact-card { background: var(--canopy); color: var(--bone); border-radius: 22px; padding: clamp(36px, 6vw, 72px); display: grid; grid-template-columns: 1.3fr 1fr; gap: 32px; align-items: center; }
 .contact-card h2 { font-size: clamp(1.9rem, 4vw, 3.2rem); margin: 0 0 14px; }
@@ -297,8 +298,10 @@ footer a { color: inherit; }
         <div>
           <p class="eyebrow">Founder</p>
           <h2 id="founder-title" class="display">Antal Kiss</h2>
-          <p>I'm Hungarian, I live in the Netherlands, and I'm working my way to Southeast Asia. I don't come from biology. I come from building software, and I want to put it to work for something that matters: protecting wild animals.</p>
-          <p>WildWard is where that work lives. Bats come first because the gap is clear and the people studying them need help now.</p>
+          <p class="quote">"The wild is disappearing faster than the people protecting it can keep up. I want to give them better tools."</p>
+          <p>I'm a builder. I've shipped games, AI assistants and web products, mostly on my own, with AI as my engineering team. That taught me something that changes everything for conservation: one person with the right tools can now do what used to take a whole lab.</p>
+          <p>So I'm pointing everything I can build at the problem I care about most. WildWard starts with the bats of Southeast Asia, because the gap is clear and the researchers need help now. The goal is much bigger: a toolkit that lets every ranger and researcher, anywhere, see and hear what's happening in their forest.</p>
+          <p>I build with the people who do the fieldwork, not over their heads. If that's you, I'd love to talk.</p>
         </div>
       </div>
     </section>
