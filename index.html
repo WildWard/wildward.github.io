@@ -42,7 +42,7 @@ a { color: inherit; }
 .top .cta { border: 1.5px solid var(--bone); padding: 10px 16px; border-radius: 99px; opacity: 1; }
 
 /* hero: a real Philippine-region bat, in the dark, where we work */
-.hero { position: relative; min-height: 100svh; display: grid; grid-template-rows: 1fr auto; overflow: hidden; background: #000; }
+.hero { position: relative; min-height: 100svh; display: grid; overflow: hidden; background: #000; }
 .hero > img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 30% 40%; }
 .hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(90deg, rgba(0,0,0,0) 30%, rgba(0,0,0,.55) 62%, rgba(0,0,0,.75)), linear-gradient(0deg, rgba(10,21,16,1) 0%, rgba(10,21,16,0) 30%); }
 .hero-copy { position: relative; z-index: 2; align-self: center; justify-self: end; width: min(780px, 58vw); padding: 120px clamp(16px, 5vw, 64px) 40px; }
@@ -53,11 +53,6 @@ a { color: inherit; }
 .btn:hover { transform: translateY(-2px); }
 .btn-ghost { background: transparent; color: var(--bone); border: 1.5px solid rgba(238,240,234,.6); margin-left: 10px; }
 
-/* the listening strip: a live spectrogram along the bottom of the hero */
-.listen { position: relative; z-index: 2; height: 120px; border-top: 1px solid rgba(233,160,75,.25); }
-.listen canvas { width: 100%; height: 100%; display: block; }
-.listen-label { position: absolute; left: clamp(16px, 4vw, 44px); right: 16px; bottom: 10px; background: linear-gradient(90deg, rgba(10,21,16,.9), rgba(10,21,16,0)); padding: 4px 0; font: 500 .66rem/1 var(--mono); letter-spacing: .1em; text-transform: uppercase; color: var(--fog); }
-.listen-label b { color: var(--wing); font-weight: 500; }
 
 /* mission */
 .mission { background: var(--night); padding: clamp(96px, 16vh, 180px) 0 clamp(72px, 12vh, 140px); }
@@ -167,7 +162,6 @@ footer a { color: inherit; }
   .road li { padding: 0 0 0 26px; }
   .road li::before { top: 2px; left: -8px; }
   .btn-ghost { margin: 12px 0 0; }
-  .listen { height: 96px; }
 }
 @media (prefers-reduced-motion: reduce) { html { scroll-behavior: auto; } .btn { transition: none; } }
 </style>
@@ -195,10 +189,6 @@ footer a { color: inherit; }
       <h1 id="hero-title" class="display">Protecting the wild by <span>listening</span> to it.</h1>
       <p class="lead">Most of the forest's life happens at night, in sounds people can't hear. WildWard builds AI that hears it, so the people protecting wildlife can act.</p>
       <a class="btn" href="#bats">See our first project</a><a class="btn btn-ghost" href="#mission">Our mission</a>
-    </div>
-    <div class="listen" aria-hidden="true">
-      <canvas id="spectro"></canvas>
-      <span class="listen-label">Bat calls, illustrated · <b>above the dashed line, common bat AI hears nothing</b></span>
     </div>
   </section>
 
@@ -328,76 +318,10 @@ footer a { color: inherit; }
     <div><p>© 2026 WildWard</p><p>Made in the Netherlands</p></div>
     <div>
       <p>Photos: diadem leaf-nosed bat by Michael Pennay (<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>); giant golden-crowned flying fox by Luke Marcos Imbong (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>); Philippine tarsier by Charles J. Sharp (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>). All via Wikimedia Commons, resized.</p>
-      <p>Test recordings: ChiroVox, used for non-commercial research only and not redistributed. Görföl et al. 2022, PeerJ 10:e12445. The spectrogram strip is an illustration, not a recording.</p>
+      <p>Test recordings: ChiroVox, used for non-commercial research only and not redistributed. Görföl et al. 2022, PeerJ 10:e12445.</p>
     </div>
   </div>
 </footer>
 
-<script>
-(() => {
-  const canvas = document.getElementById("spectro");
-  const ctx = canvas.getContext("2d");
-  const still = matchMedia("(prefers-reduced-motion: reduce)").matches;
-  const MAX_KHZ = 190, LIMIT_KHZ = 120;
-  let w, h, calls = [], last = 0;
-  // simplified call families: FM sweeps (Myotis, Kerivoula, Miniopterus) and CF calls (Rhinolophus, Hipposideros)
-  const kinds = [
-    { type: "fm", top: 110, bottom: 38, len: 7 },
-    { type: "fm", top: 175, bottom: 85, len: 5 },
-    { type: "fm", top: 72, bottom: 46, len: 12 },
-    { type: "cf", f: 150, len: 28 },
-    { type: "cf", f: 162, len: 44 },
-    { type: "cf", f: 92, len: 32 },
-  ];
-  const streams = [kinds, kinds.filter(k => (k.f || k.top) > LIMIT_KHZ)];
-  const ends = [0, 0];
-
-  function resize() {
-    const dpr = Math.min(devicePixelRatio || 1, 2);
-    w = canvas.clientWidth; h = canvas.clientHeight;
-    canvas.width = w * dpr; canvas.height = h * dpr;
-    ctx.setTransform(dpr, 0, 0, dpr, 0, 0);
-  }
-  const yOf = khz => h * 0.9 - (khz / MAX_KHZ) * h * 0.72;
-  function spawn(x, pool) {
-    const k = pool[Math.floor(Math.random() * pool.length)];
-    const n = 4 + Math.floor(Math.random() * 6), gap = k.len + 12 + Math.random() * 18, shift = (Math.random() - .5) * 8;
-    for (let i = 0; i < n; i++) {
-      const a = .5 + .5 * Math.sin(Math.PI * (i + 1) / (n + 1));
-      calls.push({ ...k, f: k.f && k.f + shift, top: k.top && k.top + shift, bottom: k.bottom && k.bottom + shift, x: x + i * gap, a });
-    }
-    return x + n * gap;
-  }
-  function color(a) { return `rgba(${Math.round(200 + 33 * a)},${Math.round(110 + 50 * a)},${Math.round(60 + 15 * a)},${.35 + .65 * a})`; }
-  function draw(c) {
-    ctx.strokeStyle = color(c.a); ctx.lineCap = "round"; ctx.shadowColor = "rgba(233,160,75,.6)"; ctx.shadowBlur = 6 * c.a;
-    ctx.beginPath();
-    if (c.type === "fm") {
-      ctx.lineWidth = 1.8;
-      for (let s = 0; s <= 10; s++) { const t = s / 10, f = c.top - (c.top - c.bottom) * Math.pow(t, .6); s ? ctx.lineTo(c.x + c.len * t, yOf(f)) : ctx.moveTo(c.x, yOf(f)); }
-    } else {
-      ctx.lineWidth = 2.4; ctx.moveTo(c.x, yOf(c.f)); ctx.lineTo(c.x + c.len, yOf(c.f)); ctx.lineTo(c.x + c.len + 5, yOf(c.f - 12));
-    }
-    ctx.stroke();
-  }
-  function frame(t) {
-    const dt = Math.min(50, t - last || 16); last = t;
-    const dx = still ? 0 : dt * .04;
-    ctx.clearRect(0, 0, w, h);
-    for (const c of calls) { c.x -= dx; draw(c); }
-    ctx.shadowBlur = 0;
-    calls = calls.filter(c => c.x + c.len > -20);
-    streams.forEach((pool, i) => { ends[i] -= dx; while (ends[i] < w + 200) ends[i] = spawn(ends[i] + 60 + Math.random() * 160, pool); });
-    const ly = yOf(LIMIT_KHZ);
-    ctx.setLineDash([5, 6]); ctx.strokeStyle = "rgba(233,160,75,.7)"; ctx.lineWidth = 1;
-    ctx.beginPath(); ctx.moveTo(0, ly); ctx.lineTo(w, ly); ctx.stroke(); ctx.setLineDash([]);
-    if (!still) requestAnimationFrame(frame);
-  }
-  resize();
-  streams.forEach((pool, i) => { let x = 20 + i * 90; while (x < w + 200) x = spawn(x, pool) + 60 + Math.random() * 160; ends[i] = x; });
-  addEventListener("resize", () => { resize(); if (still) frame(0); });
-  requestAnimationFrame(frame);
-})();
-</script>
 </body>
 </html>
