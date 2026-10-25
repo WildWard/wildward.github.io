@@ -1,0 +1,256 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bats vs Kilowatts</title>
+<meta name="description" content="What it costs a wind farm to protect bats, what the bats are worth, and why better species ID makes protection cheaper. With an open calculator.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wildward.github.io/bat-savings.html">
+<meta property="og:title" content="Bats vs kilowatts: what protecting bats costs a wind farm">
+<meta property="og:description" content="An open calculator with sourced numbers: power lost, bats saved, crops protected.">
+<meta property="og:image" content="https://wildward.github.io/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700;112,800;125,800&family=Figtree:ital,wght@0,400;0,600;1,400&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #0a1510;
+  --canopy: #10291f;
+  --leaf: #8fbf7a;
+  --wing: #e9a04b;
+  --bone: #eef0ea;
+  --fog: #9fb0a6;
+  --ink: #12201a;
+  --paper: #f3f5f1;
+  --display: "Archivo", "Arial Black", sans-serif;
+  --body: "Figtree", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.125rem/1.7 var(--body); -webkit-font-smoothing: antialiased; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--wing); outline-offset: 3px; border-radius: 2px; }
+.display { font-family: var(--display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; letter-spacing: -.01em; line-height: .95; }
+.eyebrow { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); margin: 0 0 20px; }
+
+.top { display: flex; justify-content: space-between; align-items: center; padding: 22px clamp(16px, 4vw, 44px); background: var(--night); color: var(--bone); }
+.wordmark { font: 800 1.15rem/1 var(--display); font-stretch: 125%; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.wordmark img { width: 34px; height: auto; }
+.wordmark .ward { color: var(--wing); }
+.top nav a { font: 600 .9rem/1 var(--body); text-decoration: none; color: var(--fog); }
+.top nav a:hover { color: var(--bone); }
+
+.hero { background: var(--night); color: var(--bone); }
+.hero .inner { width: min(820px, 100% - 32px); margin-inline: auto; padding: clamp(72px, 14vh, 140px) 0 clamp(48px, 8vh, 80px); }
+.hero h1 { font-size: clamp(2.4rem, 7vw, 5rem); margin: 0 0 24px; }
+.hero h1 span { color: var(--leaf); }
+.lede { font-size: clamp(1.15rem, 2vw, 1.35rem); line-height: 1.55; color: #dfe5df; margin: 0; max-width: 40rem; }
+.meta { font: 400 .7rem/1.6 var(--mono); color: var(--fog); margin: 28px 0 0; }
+
+article { width: min(760px, 100% - 32px); margin-inline: auto; padding: clamp(56px, 9vh, 96px) 0 24px; }
+article h2 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); margin: 64px 0 18px; }
+article h2:first-child { margin-top: 0; }
+article p { margin: 0 0 20px; color: #24332b; }
+article ul { padding-left: 22px; margin: 0 0 20px; color: #24332b; }
+article li { margin-bottom: 10px; }
+sup a { font: 500 .65rem/1 var(--mono); color: #3f6b3a; text-decoration: none; padding-left: 2px; }
+.pull { font: 600 clamp(1.25rem, 2.4vw, 1.6rem)/1.4 var(--body); color: var(--ink); border-left: 3px solid var(--wing); padding-left: 20px; margin: 40px 0; }
+
+/* calculator */
+.calc { background: var(--night); color: var(--bone); border-radius: 22px; padding: clamp(24px, 4vw, 40px); margin: 32px 0 40px; }
+.calc h3 { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); margin: 0 0 18px; }
+.modes { display: flex; gap: 8px; flex-wrap: wrap; margin: 0 0 22px; }
+.modes button { font: 600 .9rem/1 var(--body); padding: 11px 16px; border-radius: 99px; border: 1.5px solid #2c4a3b; background: transparent; color: var(--bone); cursor: pointer; }
+.modes button[aria-pressed="true"] { background: var(--wing); border-color: var(--wing); color: var(--ink); }
+.inputs { display: grid; grid-template-columns: repeat(2, 1fr); gap: 16px 22px; }
+.field label { display: block; font-size: .86rem; color: #cdd6cf; margin-bottom: 6px; }
+.field .row { display: flex; align-items: center; gap: 10px; }
+.field input[type=range] { flex: 1; accent-color: var(--wing); min-width: 0; }
+.field output { font: 500 .8rem/1 var(--mono); color: var(--bone); min-width: 5.5em; text-align: right; }
+.field small { display: block; font-size: .72rem; color: var(--fog); margin-top: 4px; line-height: 1.4; }
+.results { display: grid; grid-template-columns: repeat(3, 1fr); gap: 12px; margin-top: 28px; padding-top: 24px; border-top: 1px solid #1f3a2d; }
+.res { background: var(--canopy); border-radius: 14px; padding: 16px; }
+.res strong { display: block; font: 800 clamp(1.4rem, 3vw, 1.9rem)/1 var(--display); font-stretch: 112%; color: var(--wing); margin-bottom: 8px; overflow-wrap: anywhere; }
+.res.good strong { color: var(--leaf); }
+.res span { font-size: .84rem; line-height: 1.4; color: #cdd6cf; display: block; }
+.verdict { margin: 20px 0 0; font-size: 1rem; color: #dfe5df; }
+
+.honest { background: #e6ebe4; border-radius: 14px; padding: 24px 26px; margin: 28px 0; }
+.honest h3 { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #3f6b3a; margin: 0 0 14px; }
+.honest ul:last-child, .honest p:last-child { margin-bottom: 0; }
+
+.cta { background: var(--night); color: var(--bone); border-radius: 22px; padding: clamp(32px, 5vw, 56px); margin: 64px 0 0; }
+.cta h2 { margin-top: 0; color: var(--bone); }
+.cta p { color: #cdd6cf; }
+.btn { display: inline-flex; align-items: center; background: var(--wing); color: var(--ink); font: 600 1rem/1 var(--body); padding: 16px 24px; border-radius: 99px; text-decoration: none; margin: 8px 12px 0 0; }
+.btn-ghost { background: transparent; color: var(--bone); border: 1.5px solid rgba(238,240,234,.6); }
+
+.sources { width: min(760px, 100% - 32px); margin: 0 auto; padding: 48px 0 56px; border-top: 1px solid #d3dad2; font: 400 .72rem/1.7 var(--mono); color: #56645c; }
+.sources h2 { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 16px; color: #3f6b3a; }
+.sources ol { padding-left: 22px; margin: 0; }
+.sources li { margin-bottom: 8px; overflow-wrap: anywhere; }
+footer { color: #56645c; padding: 0 0 48px; font: 400 .66rem/1.7 var(--mono); }
+footer .wrap { width: min(760px, 100% - 32px); margin-inline: auto; border-top: 1px solid #d3dad2; padding-top: 24px; }
+
+@media (max-width: 680px) {
+  .inputs, .results { grid-template-columns: 1fr; }
+}
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="wordmark" href="./" aria-label="WildWard home">
+    <img src="logo-shield.png" alt="" width="34" height="40">
+    <span>Wild<span class="ward">Ward</span></span>
+  </a>
+  <nav aria-label="Site"><a href="articles.html">← All articles</a></nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="title">
+    <div class="inner">
+      <p class="eyebrow">Field notes · The numbers</p>
+      <h1 id="title" class="display">Bats vs <span>kilowatts</span></h1>
+      <p class="lede">Slowing turbines on risky nights saves most of the bats that would die. What does that cost a wind farm, and what are the bats worth? We ran the numbers with published data, and built an open calculator so you can run them too.</p>
+      <p class="meta">WildWard · 25 October 2026 · 7 min read · companion to <a href="bats-and-wind.html">Wind is coming to Asia's bat country</a></p>
+    </div>
+  </section>
+
+  <article>
+    <h2 class="display">The short answer</h2>
+    <p>Protecting bats at a wind farm costs about <strong>1-2% of its electricity</strong>. That buys a big cut in bat deaths: 44-93% with simple curtailment<sup><a href="#s1">1</a></sup>, 74-91% with smart, acoustic curtailment.<sup><a href="#s2">2</a></sup></p>
+    <p>On crop value alone, though, it doesn't pay for itself at a single wind farm. A bat protects roughly a dollar's worth of rice a year, while each bat saved costs the farm hundreds of dollars in lost power. We'd rather show that honestly than sell a number that falls apart.</p>
+    <p class="pull">So the case for bat-safe wind isn't crop dollars. It's a small cost, big financing risk, species we can't replace, and a cost that better data can cut in half.</p>
+
+    <h2 class="display">Run it yourself</h2>
+    <p>A typical onshore wind farm, with defaults taken from published studies. Move the sliders to match a real project.</p>
+
+    <div class="calc" id="calc">
+      <h3>Wind farm calculator</h3>
+      <div class="modes" role="group" aria-label="Protection method">
+        <button type="button" data-mode="blanket" aria-pressed="false">Simple curtailment</button>
+        <button type="button" data-mode="smart" aria-pressed="true">Smart curtailment (acoustic)</button>
+      </div>
+      <div class="inputs">
+        <div class="field"><label for="mw">Wind farm size</label><div class="row"><input id="mw" type="range" min="10" max="1000" step="10" value="100"><output for="mw"></output></div><small>Installed capacity</small></div>
+        <div class="field"><label for="cf">Capacity factor</label><div class="row"><input id="cf" type="range" min="15" max="50" step="1" value="30"><output for="cf"></output></div><small>Share of the year at full power, typically 25-40%</small></div>
+        <div class="field"><label for="price">Electricity price</label><div class="row"><input id="price" type="range" min="0.03" max="0.20" step="0.005" value="0.08"><output for="price"></output></div><small>USD per kWh. Philippine offshore auction cap: PHP 11 (about $0.19)<sup><a href="#s7">7</a></sup></small></div>
+        <div class="field"><label for="deaths">Bat deaths without protection</label><div class="row"><input id="deaths" type="range" min="1" max="50" step="0.5" value="5"><output for="deaths"></output></div><small>Per MW per year. US median 3.1, forested sites 6-10, up to ~50.<sup><a href="#s3">3</a></sup> No Southeast Asian data yet.</small></div>
+        <div class="field"><label for="cut">Bat deaths prevented</label><div class="row"><input id="cut" type="range" min="20" max="95" step="1" value="80"><output for="cut"></output></div><small>Simple curtailment 44-93%, smart 74-91%</small></div>
+        <div class="field"><label for="loss">Electricity given up</label><div class="row"><input id="loss" type="range" min="0.2" max="8" step="0.1" value="1"><output for="loss"></output></div><small>Of yearly output. Simple ~2% (up to 8%); smart about half of that<sup><a href="#s4">4</a></sup></small></div>
+        <div class="field"><label for="value">Crop value per bat per year</label><div class="row"><input id="value" type="range" min="0.25" max="20" step="0.25" value="1"><output for="value"></output></div><small>About $1 for rice pests in Thailand (see below). Higher where bats protect fruit or cash crops.</small></div>
+        <div class="field"><label for="years">Years a bat would have lived on</label><div class="row"><input id="years" type="range" min="1" max="15" step="1" value="5"><output for="years"></output></div><small>Many bats live 10-20 years; we count 5 to stay cautious</small></div>
+      </div>
+      <div class="results" aria-live="polite">
+        <div class="res good"><strong id="r-saved">-</strong><span>bats saved every year</span></div>
+        <div class="res"><strong id="r-cost">-</strong><span>electricity revenue given up per year</span></div>
+        <div class="res"><strong id="r-share">-</strong><span>of the wind farm's revenue</span></div>
+        <div class="res good"><strong id="r-crops">-</strong><span>crop protection kept per year (over the bats' lifetimes)</span></div>
+        <div class="res"><strong id="r-per">-</strong><span>cost per bat saved</span></div>
+        <div class="res good"><strong id="r-10y">-</strong><span>bats saved over 20 years of operation</span></div>
+      </div>
+      <p class="verdict" id="verdict"></p>
+    </div>
+
+    <h2 class="display">Where the numbers come from</h2>
+    <ul>
+      <li><strong>Bat deaths.</strong> North American monitoring puts the median at 3.1 bats per MW per year, higher in forested regions (6-10) and up to about 50 at some ridge-top sites.<sup><a href="#s3">3</a></sup> Southeast Asia has no published fatality monitoring yet<sup><a href="#s5">5</a></sup>, so the default of 5 is a guess. Forested tropical ridges with dozens of bat species could easily be higher.</li>
+      <li><strong>Lost power.</strong> Raising the start-up wind speed on high-risk nights cost at most 1% of yearly output in Pennsylvania.<sup><a href="#s1">1</a></sup> Across the industry, blanket curtailment typically costs about 2% of yearly output, up to 8%. Smart curtailment, which only slows turbines when detectors hear bats, cut that energy loss by 41-56%.<sup><a href="#s4">4</a></sup></li>
+      <li><strong>What a bat is worth to farmers.</strong> In Thailand, wrinkle-lipped free-tailed bats were estimated to prevent about 2,900 tonnes of rice losses a year, worth over US$1.2 million. That's roughly $410 a tonne, and the same study's model suggests 300 bats protect almost 700 kg of rice a year.<sup><a href="#s6">6</a></sup> That works out to about 2.3 kg of rice, or roughly <strong>$1 per bat per year</strong>, for rice alone. In North America, bats' pest control is worth $3.7-53 billion a year to agriculture<sup><a href="#s8">8</a></sup>, and over $1 billion a year to corn worldwide.<sup><a href="#s9">9</a></sup> Bats also pollinate durian: a Sulawesi study valued bat pollination at about $117 per hectare per season.<sup><a href="#s10">10</a></sup></li>
+    </ul>
+
+    <h2 class="display">Why it's still worth it</h2>
+    <ul>
+      <li><strong>It's small.</strong> 1-2% of output, mostly lost on low-wind nights, when turbines make little power anyway.<sup><a href="#s1">1</a></sup></li>
+      <li><strong>Financing depends on it.</strong> Many Asian wind farms are financed by development banks that follow IFC Performance Standard 6. In critical habitat, it requires a net gain for the species that make the habitat critical, and no net reduction in any Critically Endangered or Endangered population.<sup><a href="#s11">11</a></sup> A project that kills an Endangered bat risks its funding, which is worth far more than a percent of output.</li>
+      <li><strong>Some losses can't be bought back.</strong> Bats breed slowly, usually one pup a year, so a population hit by turbines recovers over decades, if at all. For threatened or barely known species, every death counts, and no price per bat captures that.</li>
+      <li><strong>The cost falls with better data.</strong> Smart curtailment only works if detectors can tell when at-risk bats are flying. In Southeast Asia, no software can identify the region's bats from their calls yet. Better species ID means slowing turbines only when it matters, so less lost power for the same bats saved.</li>
+    </ul>
+
+    <div class="honest">
+      <h3>Limits of this calculator</h3>
+      <ul>
+        <li>Fatality rates and curtailment results come from North America and Europe. Southeast Asian sites may differ a lot, in either direction.</li>
+        <li>The crop value covers one pest on one crop. It leaves out other pests, other crops, pollination, seed dispersal and the bats' offspring, so the real value per bat is higher, but by how much is unknown.</li>
+        <li>It treats every bat the same. One Endangered bat can matter more to a project, legally and ecologically, than hundreds of common ones.</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      <h2 class="display">Make it cheaper to save bats</h2>
+      <p>WildWard builds free, open tools that identify Southeast Asian bats from their calls, the missing piece for smart curtailment in the region. If you develop, finance or assess wind projects here, we'd like to hear what numbers you see.</p>
+      <a class="btn" href="mailto:wildward.org@gmail.com">Email wildward.org@gmail.com</a><a class="btn btn-ghost" href="bats-and-wind.html">Read: bats and wind</a>
+    </div>
+  </article>
+
+  <section class="sources" aria-labelledby="sources-title">
+    <h2 id="sources-title">Sources</h2>
+    <ol>
+      <li id="s1">Arnett, E. B. et al. (2011). Altering turbine speed reduces bat mortality at wind-energy facilities. <em>Frontiers in Ecology and the Environment</em>. <a href="https://tethys.pnl.gov/sites/default/files/publications/Arnett-et-al.-2011.pdf">PDF</a>.</li>
+      <li id="s2">Hayes, M. A. et al. (2019). A smart curtailment approach for reducing bat fatalities and curtailment time at wind energy facilities. <em>Ecological Applications</em> 29, e01881. <a href="https://conservationevidencejournal.com/individual-study/8839">Conservation Evidence summary</a>.</li>
+      <li id="s3">Bat fatality rates per MW: AWWIC 3rd edition summary of bat fatality monitoring data, <a href="https://tethys.pnnl.gov/publications/3rd-edition-summary-bat-fatality-monitoring-data-contained-awwic-land-based-wind">Tethys</a>; Wind Wildlife Impacts Summary 2019, <a href="https://rewi.org/wp-content/uploads/2019/05/Wind-Wildlife-Impacts-Summary-2019.pdf">REWI</a>.</li>
+      <li id="s4">Curtailment energy losses: US Department of Energy, <a href="https://www.energy.gov/node/4808987">New tool protects bats while increasing energy production</a>; Natural Power, <a href="https://www.naturalpower.com/us/insight/better-energy-loss-estimates-for-wind-farms-subject-to-bat-curtailment">EchoSense smart curtailment trials</a>.</li>
+      <li id="s5">Crane, M., Silvia, I., Grainger, M. &amp; Gale, G. (2025). Predicting risk to bat species from wind turbine collision in Southeast Asia. <em>Conservation Biology</em> 39(2), e14452. <a href="https://tethys.pnnl.gov/publications/predicting-risk-bat-species-wind-turbine-collision-southeast-asia">Tethys</a>.</li>
+      <li id="s6">Wanger, T. C. et al. (2014). Bat pest control contributes to food security in Thailand. <em>Biological Conservation</em>. <a href="https://agris.fao.org/search/ar/records/65de17506eef00c2ce9fb346">FAO AGRIS</a>; roost-box model: <a href="https://www.scidev.net/global/?p=38653">SciDev.Net</a>.</li>
+      <li id="s7">Philippine Green Energy Auction 5, offshore wind reserve price PHP 11.00/kWh. <a href="https://context.ph/2025/12/14/erc-sets-reserve-price-for-offshore-wind-auction/">Context.ph</a>; <a href="https://connections.nortonrosefulbright.com/post/102mm0o/philippines-green-energy-auction-programme-geap-round-5-offshore-wind-update">Norton Rose Fulbright</a>.</li>
+      <li id="s8">Boyles, J. G., Cryan, P., McCracken, G. F. &amp; Kunz, T. H. (2011). Economic importance of bats in agriculture. <em>Science</em> 332, 41-42. <a href="https://pubs.usgs.gov/publication/70003553">USGS</a>.</li>
+      <li id="s9">Maine, J. J. &amp; Boyles, J. G. (2015). Bats initiate vital agroecological interactions in corn. <em>PNAS</em>. <a href="https://news.siu.edu/2015/09/091415tjc15041.php">SIU news</a>.</li>
+      <li id="s10">Bat pollination of durian in Sulawesi, about US$117 per hectare per season. <a href="https://forestsnews.cifor.org/embed-post/62538">CIFOR Forests News</a>.</li>
+      <li id="s11">IFC Performance Standard 6 critical-habitat requirements as applied to wind projects, e.g. <a href="https://www3.dfc.gov/environment/eia/amunet/WindFarm/Biodiversity_Action_Plan.pdf">Amunet wind farm Biodiversity Action Plan</a>; <a href="https://thebiodiversityconsultancy.com/projects/demonstrating-no-net-loss-or-net-gain-for-a-wind-project-in-a-migratory-corridor">The Biodiversity Consultancy</a>.</li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 WildWard · Made in the Netherlands</p>
+  </div>
+</footer>
+
+<script>
+(function () {
+  const $ = id => document.getElementById(id);
+  const ids = ["mw", "cf", "price", "deaths", "cut", "loss", "value", "years"];
+  const fmt = {
+    mw: v => `${v} MW`, cf: v => `${v}%`, price: v => `$${(+v).toFixed(3)}`, deaths: v => `${v}/MW`,
+    cut: v => `${v}%`, loss: v => `${(+v).toFixed(1)}%`, value: v => `$${(+v).toFixed(2)}`, years: v => `${v} yr`
+  };
+  const presets = { blanket: { cut: 60, loss: 2 }, smart: { cut: 80, loss: 1 } };
+  const money = v => v >= 1e6 ? `$${(v / 1e6).toFixed(v >= 1e7 ? 0 : 1)}M` : v >= 1e4 ? `$${Math.round(v / 1e3)}k` : `$${Math.round(v).toLocaleString("en-US")}`;
+  const num = v => Math.round(v).toLocaleString("en-US");
+
+  function update() {
+    const v = Object.fromEntries(ids.map(k => [k, +$(k).value]));
+    ids.forEach(k => { document.querySelector(`output[for=${k}]`).textContent = fmt[k](v[k]); });
+    const mwh = v.mw * 8760 * v.cf / 100;                 // yearly output
+    const revenue = mwh * 1000 * v.price;
+    const lost = revenue * v.loss / 100;
+    const saved = v.mw * v.deaths * v.cut / 100;
+    const crops = saved * v.value * v.years;              // each year's saved bats keep protecting crops for years
+    $("r-saved").textContent = num(saved);
+    $("r-cost").textContent = money(lost);
+    $("r-share").textContent = `${v.loss.toFixed(1)}%`;
+    $("r-crops").textContent = money(crops);
+    $("r-per").textContent = saved ? money(lost / saved) : "-";
+    $("r-10y").textContent = num(saved * 20);
+    $("verdict").textContent = crops >= lost
+      ? `With these numbers, the crops the saved bats protect are worth more than the power given up.`
+      : `With these numbers, crop value covers ${Math.max(1, Math.round(100 * crops / lost))}% of the cost. The rest is the price of keeping ${num(saved * 20)} bats alive over the farm's life, at ${v.loss.toFixed(1)}% of its output.`;
+  }
+  document.querySelectorAll(".modes button").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll(".modes button").forEach(x => x.setAttribute("aria-pressed", x === b));
+    const p = presets[b.dataset.mode];
+    $("cut").value = p.cut; $("loss").value = p.loss;
+    update();
+  }));
+  ids.forEach(k => $(k).addEventListener("input", update));
+  update();
+})();
+</script>
+</body>
+</html>
