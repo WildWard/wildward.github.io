@@ -165,6 +165,24 @@ footer .wrap { border-top: 1px solid #d3dad2; padding-top: 28px; display: grid; 
 footer p { margin: 0 0 6px; }
 footer a { color: inherit; }
 
+/* field notes teaser */
+.notes { background: var(--canopy); padding: clamp(80px, 12vh, 140px) 0; }
+.notes-grid { display: grid; grid-template-columns: 1fr 1.15fr; gap: clamp(36px, 6vw, 90px); align-items: center; }
+.notes-grid > * { min-width: 0; }
+.notes h2 { font-size: clamp(2rem, 4.4vw, 3.8rem); margin: 0 0 20px; }
+.notes h2 span { color: var(--leaf); }
+.notes-copy p:not(.eyebrow) { color: #cdd6cf; max-width: 32rem; margin: 0 0 28px; }
+.feature { display: block; background: var(--night); border-radius: 20px; overflow: hidden; text-decoration: none; transition: transform .2s; }
+.feature:hover { transform: translateY(-3px); }
+.feature img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
+.feature .body { padding: 24px 28px 28px; }
+.feature .tag { font: 500 .66rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); }
+.feature h3 { font: 800 clamp(1.35rem, 2.4vw, 1.8rem)/1 var(--display); font-stretch: 112%; text-transform: uppercase; margin: 12px 0 10px; }
+.feature p { margin: 0; color: #cdd6cf; }
+.feature .more { display: inline-block; margin-top: 16px; font: 500 .75rem/1 var(--mono); color: var(--leaf); }
+@media (max-width: 900px) { .notes-grid { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .feature { transition: none; } }
+
 @media (max-width: 900px) {
   .mission-row, .split, .project-grid, .founder-grid, .contact-card, footer .wrap, .findings-grid { grid-template-columns: 1fr; }
   .split figure { height: 60vh; }
@@ -298,6 +316,26 @@ footer a { color: inherit; }
     </div>
   </section>
 
+  <section class="notes" aria-labelledby="notes-title">
+    <div class="wrap notes-grid">
+      <div class="notes-copy">
+        <p class="eyebrow">Field notes</p>
+        <h2 id="notes-title" class="display">Why this <span>matters now</span></h2>
+        <p>Wind farms are going up across Southeast Asia, in some of the most bat-rich places on Earth. We write up what we learn, with sources and honest limits.</p>
+        <a class="btn" href="articles.html">Read all articles</a>
+      </div>
+      <a class="feature" href="bats-and-wind.html">
+        <img src="img/wind-card.jpg" alt="Aerial view of a row of wind turbines along a coastline in Ilocos Norte, Philippines" width="1400" height="863" loading="lazy">
+        <div class="body">
+          <span class="tag">New article · 6 min read</span>
+          <h3>Wind is coming to Asia's bat country</h3>
+          <p>The fixes that cut bat deaths at turbines by up to 93% already exist. Southeast Asia can't use them yet. Here's why.</p>
+          <span class="more">Read the article →</span>
+        </div>
+      </a>
+    </div>
+  </section>
+
   <section class="next" aria-labelledby="next-title">
     <img src="img/tarsier.jpg" alt="A Philippine tarsier with huge round eyes clinging to a branch among green leaves" width="2000" height="1333" loading="lazy">
     <span class="credit">Philippine tarsier. Photo: Charles J. Sharp, CC BY-SA 4.0</span>
@@ -358,7 +396,7 @@ footer a { color: inherit; }
   <div class="wrap">
     <div><p>© 2026 WildWard</p><p>Made in the Netherlands</p></div>
     <div>
-      <p>Photos: diadem leaf-nosed bat by Michael Pennay (<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>); giant golden-crowned flying fox by Luke Marcos Imbong (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>); Philippine tarsier by Charles J. Sharp (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>). All via Wikimedia Commons, resized.</p>
+      <p>Photos: diadem leaf-nosed bat by Michael Pennay (<a href="https://creativecommons.org/licenses/by/2.0/">CC BY 2.0</a>); giant golden-crowned flying fox by Luke Marcos Imbong (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>); Philippine tarsier by Charles J. Sharp (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>); Bangui wind farm by Luke Vlog Series (<a href="https://creativecommons.org/licenses/by/3.0/">CC BY 3.0</a>). All via Wikimedia Commons, resized.</p>
       <p>Test recordings: ChiroVox, used for non-commercial research only and not redistributed. Görföl et al. 2022, PeerJ 10:e12445.</p>
     </div>
   </div>
