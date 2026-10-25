@@ -1,0 +1,198 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>Bats and Wind</title>
+<meta name="description" content="Wind power is coming to Southeast Asia's bat habitats. What turbines do to bats, what fixes it, and why the region can't use those fixes yet.">
+<meta property="og:type" content="article">
+<meta property="og:url" content="https://wildward.github.io/bats-and-wind.html">
+<meta property="og:title" content="Wind is coming to Asia's bat country">
+<meta property="og:description" content="What turbines do to bats, what fixes it, and why Southeast Asia can't use those fixes yet.">
+<meta property="og:image" content="https://wildward.github.io/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700;112,800;125,800&family=Figtree:ital,wght@0,400;0,600;1,400&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #0a1510;
+  --canopy: #10291f;
+  --leaf: #8fbf7a;
+  --wing: #e9a04b;
+  --bone: #eef0ea;
+  --fog: #9fb0a6;
+  --ink: #12201a;
+  --paper: #f3f5f1;
+  --display: "Archivo", "Arial Black", sans-serif;
+  --body: "Figtree", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--paper); color: var(--ink); font: 400 1.125rem/1.7 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--wing); outline-offset: 3px; border-radius: 2px; }
+.display { font-family: var(--display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; letter-spacing: -.01em; line-height: .95; }
+.eyebrow { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); margin: 0 0 20px; }
+
+.top { display: flex; justify-content: space-between; align-items: center; padding: 22px clamp(16px, 4vw, 44px); background: var(--night); color: var(--bone); }
+.wordmark { font: 800 1.15rem/1 var(--display); font-stretch: 125%; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.wordmark img { width: 34px; height: auto; }
+.wordmark .ward { color: var(--wing); }
+.top nav a { font: 600 .9rem/1 var(--body); text-decoration: none; color: var(--fog); }
+.top nav a:hover { color: var(--bone); }
+
+.hero { position: relative; background: var(--night); color: var(--bone); overflow: hidden; }
+.hero img { position: absolute; inset: 0; width: 100%; height: 100%; object-fit: cover; object-position: 50% 40%; opacity: .42; }
+.hero::after { content: ""; position: absolute; inset: 0; background: linear-gradient(0deg, var(--night) 0%, rgba(10,21,16,.35) 60%, rgba(10,21,16,.7) 100%); }
+.hero .inner { position: relative; z-index: 2; width: min(820px, 100% - 32px); margin-inline: auto; padding: clamp(96px, 18vh, 180px) 0 clamp(48px, 8vh, 80px); }
+.hero h1 { font-size: clamp(2.4rem, 7vw, 5.2rem); margin: 0 0 24px; }
+.hero h1 span { color: var(--leaf); }
+.lede { font-size: clamp(1.15rem, 2vw, 1.35rem); line-height: 1.55; color: #dfe5df; margin: 0; max-width: 40rem; }
+.meta { font: 400 .7rem/1.6 var(--mono); color: var(--fog); margin: 28px 0 0; }
+.credit { position: absolute; right: 12px; bottom: 10px; z-index: 3; font: 400 .6rem/1 var(--mono); color: rgba(238,240,234,.55); }
+
+article { width: min(720px, 100% - 32px); margin-inline: auto; padding: clamp(56px, 9vh, 96px) 0 24px; }
+article h2 { font-size: clamp(1.6rem, 3.6vw, 2.4rem); margin: 64px 0 18px; }
+article h2:first-child { margin-top: 0; }
+article p { margin: 0 0 20px; color: #24332b; }
+article strong { color: var(--ink); }
+article ul { padding-left: 22px; margin: 0 0 20px; color: #24332b; }
+article li { margin-bottom: 10px; }
+sup a { font: 500 .65rem/1 var(--mono); color: #3f6b3a; text-decoration: none; padding-left: 2px; }
+
+.stats { display: grid; grid-template-columns: repeat(3, 1fr); gap: 14px; margin: 32px 0 36px; }
+.stat { background: var(--canopy); color: var(--bone); border-radius: 14px; padding: 22px 20px; }
+.stat strong { display: block; font: 800 clamp(1.8rem, 4vw, 2.4rem)/1 var(--display); font-stretch: 112%; color: var(--wing); margin-bottom: 10px; }
+.stat span { font-size: .92rem; line-height: 1.45; color: #cdd6cf; display: block; }
+
+.pull { font: 600 clamp(1.25rem, 2.4vw, 1.6rem)/1.4 var(--body); color: var(--ink); border-left: 3px solid var(--wing); padding-left: 20px; margin: 40px 0; }
+
+.honest { background: #e6ebe4; border-radius: 14px; padding: 24px 26px; margin: 28px 0; }
+.honest h3 { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #3f6b3a; margin: 0 0 14px; }
+.honest p:last-child, .honest ul:last-child { margin-bottom: 0; }
+
+.cta { background: var(--night); color: var(--bone); border-radius: 22px; padding: clamp(32px, 5vw, 56px); margin: 64px 0 0; }
+.cta h2 { margin-top: 0; color: var(--bone); }
+.cta p { color: #cdd6cf; }
+.btn { display: inline-flex; align-items: center; background: var(--wing); color: var(--ink); font: 600 1rem/1 var(--body); padding: 16px 24px; border-radius: 99px; text-decoration: none; transition: transform .2s; margin: 8px 12px 0 0; }
+.btn:hover { transform: translateY(-2px); }
+.btn-ghost { background: transparent; color: var(--bone); border: 1.5px solid rgba(238,240,234,.6); }
+
+.sources { width: min(720px, 100% - 32px); margin: 0 auto; padding: 48px 0 56px; border-top: 1px solid #d3dad2; font: 400 .72rem/1.7 var(--mono); color: #56645c; }
+.sources h2 { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; margin: 0 0 16px; color: #3f6b3a; }
+.sources ol { padding-left: 22px; margin: 0; }
+.sources li { margin-bottom: 8px; overflow-wrap: anywhere; }
+
+footer { background: var(--paper); color: #56645c; padding: 0 0 48px; font: 400 .66rem/1.7 var(--mono); }
+footer .wrap { width: min(720px, 100% - 32px); margin-inline: auto; border-top: 1px solid #d3dad2; padding-top: 24px; }
+footer p { margin: 0 0 6px; }
+
+@media (max-width: 640px) {
+  .stats { grid-template-columns: 1fr; }
+}
+@media (prefers-reduced-motion: reduce) { .btn { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="wordmark" href="./" aria-label="WildWard home">
+    <img src="logo-shield.png" alt="" width="34" height="40">
+    <span>Wild<span class="ward">Ward</span></span>
+  </a>
+  <nav aria-label="Site"><a href="./">← Back to WildWard</a></nav>
+</header>
+
+<main>
+  <section class="hero" aria-labelledby="title">
+    <img src="img/foxes.jpg" alt="" width="2000" height="1333">
+    <span class="credit">Giant golden-crowned flying foxes. Photo: Luke Marcos Imbong, CC BY-SA 4.0</span>
+    <div class="inner">
+      <p class="eyebrow">Field notes · Bats and wind energy</p>
+      <h1 id="title" class="display">Wind is coming to <span>Asia's bat country</span></h1>
+      <p class="lede">Southeast Asia is about to build a lot of wind turbines, in some of the most bat-rich places on Earth. The world already knows how to keep turbines from killing most bats. But every fix starts with knowing which bats are flying past, and in this region no tool can tell you that yet.</p>
+      <p class="meta">WildWard · 25 October 2026 · 6 min read</p>
+    </div>
+  </section>
+
+  <article>
+    <h2 class="display">Turbines kill bats. A lot of them.</h2>
+    <p>Bats are among the animals hit hardest by wind energy. In the United States, one estimate put the toll at more than 600,000 bats in 2012 alone, possibly up to 900,000.<sup><a href="#s1">1</a></sup> Other scientists argue that number rests on too few sites to be reliable, and the true figure could be lower or higher.<sup><a href="#s2">2</a></sup> In Europe, studies find between 1.5 and 30 dead bats per turbine per year, about 14 on average, which adds up to hundreds of thousands across the continent.<sup><a href="#s3">3</a></sup></p>
+    <p>Those numbers matter more for bats than for most animals. Bats live long and breed slowly, usually one pup a year, so a population can't quickly replace the adults it loses.</p>
+
+    <div class="stats">
+      <div class="stat"><strong>600k+</strong><span>bats estimated killed at US wind farms in one year (2012)<sup><a href="#s1">1</a></sup></span></div>
+      <div class="stat"><strong>~14</strong><span>bats killed per turbine per year on average in European studies<sup><a href="#s3">3</a></sup></span></div>
+      <div class="stat"><strong>44-93%</strong><span>fewer bat deaths on nights turbines started a little later in low wind<sup><a href="#s4">4</a></sup></span></div>
+    </div>
+
+    <h2 class="display">Southeast Asia is a blind spot</h2>
+    <p>Almost everything we know about bats and turbines comes from Europe and North America. A 2025 study in <em>Conservation Biology</em> tried to predict which Southeast Asian bats are most at risk and had to borrow fatality data from other continents, because the region doesn't have enough of its own. The authors call for collision monitoring programmes across the region.<sup><a href="#s5">5</a></sup></p>
+    <p>The first local evidence is starting to come in. In central Thailand, researchers flew bat detectors on a balloon kite up to 100 m, inside the height swept by local turbine blades (21 to 159 m). They found six open-air hunting species working that zone, including the wrinkle-lipped free-tailed bat (<em>Mops plicatus</em>) and two house bats (<em>Scotophilus kuhlii</em> and <em>S. heathii</em>).<sup><a href="#s6">6</a></sup> In India, a 2013 study at wind farms in Gujarat found few recorded deaths, and its authors also said far more data was needed.<sup><a href="#s7">7</a></sup></p>
+    <p class="pull">With 390+ bat species across Southeast Asia, the region has more bats to lose and less data on them than anywhere turbines have been studied.</p>
+
+    <h2 class="display">And the turbines are coming</h2>
+    <p>The build-out is real. The Philippines has awarded 92 offshore wind service contracts with around 68 GW of potential capacity, and its first offshore auction targets 3.3 GW for delivery from 2028.<sup><a href="#s8">8</a></sup> Vietnam had about 4.8 GW of wind installed by the end of 2023, with more going up in the Mekong Delta: Vinh Long province alone runs 650 MW and aims for 922 MW by the end of 2026.<sup><a href="#s9">9</a></sup><sup><a href="#s10">10</a></sup></p>
+    <p>Clean energy is the right call. The aim is to build it without wiping out the animals that keep forests and farms healthy: bats eat huge numbers of crop pests, and some pollinate fruit like durian.</p>
+
+    <h2 class="display">The fixes exist. They need ears.</h2>
+    <p>Wind farms elsewhere have learned to cut bat deaths sharply while losing very little power:</p>
+    <ul>
+      <li><strong>Curtailment.</strong> Most bats fly in low wind, when turbines make little power anyway. Starting turbines at a slightly higher wind speed cut bat deaths by 44-93% on the nights tested in Pennsylvania, for at most 1% of yearly output.<sup><a href="#s4">4</a></sup> Across six North American sites, each extra 1 m/s of start-up wind speed cut deaths by about a third.<sup><a href="#s11">11</a></sup></li>
+      <li><strong>Smart curtailment.</strong> Detectors on the turbines listen for bats in real time, and the turbines slow down only when bats are actually there. In a randomised trial in Wisconsin, this meant 74-91% fewer deaths of five bat species, and turbines stood still less often than under blanket curtailment.<sup><a href="#s12">12</a></sup></li>
+      <li><strong>Better siting.</strong> Surveys before construction show where and when bats are most active, so turbines can go up away from roosts and flight paths.<sup><a href="#s6">6</a></sup></li>
+    </ul>
+    <p>Every one of these runs on acoustic data: recordings of bat calls, identified to species. In Europe and North America, software does much of that identification. In Southeast Asia it doesn't. When we tested a leading free bat AI on Malaysian recordings, it named none of the 12 bats correctly, because it only knows European species.</p>
+
+    <h2 class="display">Where WildWard comes in</h2>
+    <p>That's the gap we're building for: free, open, offline software that identifies Southeast Asian bats from their calls, good enough for impact surveys and, later, for smart curtailment. Open matters here. A developer, a regulator and an independent researcher can all run the same tool on the same recordings and check each other's results.</p>
+    <p>On library recordings, our method already names 77% of recordings to the right species across 102 Southeast Asian species, and 90% to the right genus.</p>
+
+    <div class="honest">
+      <h3>Where we honestly are</h3>
+      <ul>
+        <li>Our accuracy comes from clean, close-range library recordings. Recordings from turbine height are fainter and messier, so real accuracy will be lower until we train on survey data from wind sites.</li>
+        <li>The tool can't yet reliably flag a species it has never heard. We say so in the software and in our results.</li>
+        <li>Our test recordings are licensed for non-commercial research only. Commercial survey work needs training data from partners who agree to it, and we'll only use it with their permission.</li>
+      </ul>
+    </div>
+
+    <div class="cta">
+      <h2 class="display">Help us get this right</h2>
+      <p>If you survey bats near planned or operating wind farms in Southeast Asia, work on impact assessments, or develop wind projects in the region, we'd like to talk. Recordings from turbine sites are the data the region is missing most.</p>
+      <a class="btn" href="mailto:wildward.org@gmail.com">Email wildward.org@gmail.com</a><a class="btn btn-ghost" href="./#bats">See our bat project</a>
+    </div>
+  </article>
+
+  <section class="sources" aria-labelledby="sources-title">
+    <h2 id="sources-title">Sources</h2>
+    <ol>
+      <li id="s1">Hayes, M. A. (2013). Bats killed in large numbers at United States wind energy facilities. <em>BioScience</em> 63(12). Summary: <a href="https://www.sciencedaily.com/releases/2013/11/131108091314.htm">ScienceDaily</a>.</li>
+      <li id="s2">Comment: Bats killed in large numbers at United States wind energy facilities. <em>BioScience</em>. <a href="https://tethys.pnnl.gov/publications/comment-bats-killed-large-numbers-united-states-wind-energy-facilities">Tethys</a>.</li>
+      <li id="s3">Voigt, C. C. et al. (2022). <em>Global Ecology and Conservation</em>: European per-turbine fatality rates. <a href="https://repository.publisso.de/resource/frl:6440758/data">PUBLISSO</a>.</li>
+      <li id="s4">Arnett, E. B. et al. (2011). Altering turbine speed reduces bat mortality at wind-energy facilities. <em>Frontiers in Ecology and the Environment</em>. <a href="https://tethys.pnl.gov/sites/default/files/publications/Arnett-et-al.-2011.pdf">PDF</a>.</li>
+      <li id="s5">Crane, M., Silvia, I., Grainger, M. &amp; Gale, G. (2025). Predicting risk to bat species from wind turbine collision in Southeast Asia. <em>Conservation Biology</em> 39(2), e14452. <a href="https://tethys.pnnl.gov/publications/predicting-risk-bat-species-wind-turbine-collision-southeast-asia">Tethys</a>.</li>
+      <li id="s6">Srilopan, S., Krauel, J., Srilopan, K., Voigt, C. &amp; Bumrungsri, S. (2026). Assessing vertical stratification of bats and nocturnal insects to infer potential collision risk at wind turbines in central Thailand. <em>Biodiversity and Conservation</em> 35, 109. <a href="https://tethys.pnnl.gov/publications/assessing-vertical-stratification-bats-nocturnal-insects-infer-potential-collision">Tethys</a>.</li>
+      <li id="s7">Bat mortality due to collision with wind turbines in Kutch District, Gujarat, India. <em>Journal of Threatened Taxa</em> (2013). <a href="https://www.academia.edu/4687780/Bat_mortality_due_to_collision_with_wind_turbines_in_Kutch_District_Gujarat_India_">Academia</a>.</li>
+      <li id="s8">Philippine offshore wind: service contracts and the first offshore auction (GEA-5). <a href="https://asiacleanenergyforum.adb.org/wp-content/uploads/2026/06/Accelerating-OSW-in-the-PH.pdf">ADB Asia Clean Energy Forum 2026</a>; <a href="https://tribune.net.ph/2026/08/31/phl-clears-path-for-33-gw-offshore-wind-rollout">Daily Tribune, 31 Aug 2026</a>.</li>
+      <li id="s9">Vietnam installed wind capacity, end 2023. <a href="https://blogs.duanemorris.com/vietnam/wp-json/wp/v2/posts/1612">Duane Morris Vietnam blog, Nov 2024</a>.</li>
+      <li id="s10">Vinh Long strives to become major clean energy hub. <em>Vietnam Investment Review</em>, June 2026. <a href="https://www.magzter.com/stories/newspaper/Vietnam-Investment-Review/VINH-LONG-STRIVES-TO-BECOME-MAJOR-CLEAN-ENERGY-HUB">Magzter</a>.</li>
+      <li id="s11">Meta-analysis of curtailment studies at six North American facilities. <a href="https://nrel.gov/docs/fy22osti/77506.pdf">NREL</a>.</li>
+      <li id="s12">Hayes, M. A. et al. (2019). A smart curtailment approach for reducing bat fatalities and curtailment time at wind energy facilities. <em>Ecological Applications</em> 29, e01881. <a href="https://conservationevidencejournal.com/individual-study/8839">Conservation Evidence summary</a>.</li>
+    </ol>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 WildWard · Made in the Netherlands</p>
+    <p>Photo: giant golden-crowned flying fox by Luke Marcos Imbong (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>), via Wikimedia Commons, resized.</p>
+  </div>
+</footer>
+
+</body>
+</html>
