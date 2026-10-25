@@ -78,6 +78,13 @@ sup a { font: 500 .65rem/1 var(--mono); color: #3f6b3a; text-decoration: none; p
 .res.good strong { color: var(--leaf); }
 .res span { font-size: .84rem; line-height: 1.4; color: #cdd6cf; display: block; }
 .verdict { margin: 20px 0 0; font-size: 1rem; color: #dfe5df; }
+.scene-note { font-size: .85rem; color: var(--fog); margin: -8px 0 20px; min-height: 1.2em; }
+.field input[type=number] { flex: 1; min-width: 0; background: var(--canopy); color: var(--bone); border: 1.5px solid #2c4a3b; border-radius: 8px; padding: 8px 10px; font: 500 .9rem/1 var(--mono); }
+.compare { width: 100%; border-collapse: collapse; margin: 8px 0 12px; font-size: .92rem; }
+.compare th, .compare td { text-align: right; padding: 10px 8px; border-bottom: 1px solid #d3dad2; }
+.compare th:first-child, .compare td:first-child { text-align: left; }
+.compare thead th { font: 500 .66rem/1.3 var(--mono); letter-spacing: .08em; text-transform: uppercase; color: #3f6b3a; }
+.table-wrap { overflow-x: auto; }
 
 .honest { background: #e6ebe4; border-radius: 14px; padding: 24px 26px; margin: 28px 0; }
 .honest h3 { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: #3f6b3a; margin: 0 0 14px; }
@@ -132,15 +139,22 @@ footer .wrap { width: min(760px, 100% - 32px); margin-inline: auto; border-top: 
 
     <div class="calc" id="calc">
       <h3>Wind farm calculator</h3>
+      <div class="modes" role="group" aria-label="Scenario">
+        <button type="button" data-scene="farm" aria-pressed="true">One 100 MW farm</button>
+        <button type="button" data-scene="us" aria-pressed="false">United States today</button>
+        <button type="button" data-scene="ph" aria-pressed="false">Philippines today</button>
+        <button type="button" data-scene="phfull" aria-pressed="false">Philippines, full build-out</button>
+      </div>
+      <p class="scene-note" id="scene-note"></p>
       <div class="modes" role="group" aria-label="Protection method">
         <button type="button" data-mode="blanket" aria-pressed="false">Simple curtailment</button>
         <button type="button" data-mode="smart" aria-pressed="true">Smart curtailment (acoustic)</button>
       </div>
       <div class="inputs">
-        <div class="field"><label for="mw">Wind farm size</label><div class="row"><input id="mw" type="range" min="10" max="1000" step="10" value="100"><output for="mw"></output></div><small>Installed capacity</small></div>
+        <div class="field"><label for="mw">Installed wind capacity (MW)</label><div class="row"><input id="mw" type="number" min="1" max="500000" step="1" value="100" inputmode="numeric"><output for="mw"></output></div><small>One farm (e.g. 100 MW) or a whole country</small></div>
         <div class="field"><label for="cf">Capacity factor</label><div class="row"><input id="cf" type="range" min="15" max="50" step="1" value="30"><output for="cf"></output></div><small>Share of the year at full power, typically 25-40%</small></div>
         <div class="field"><label for="price">Electricity price</label><div class="row"><input id="price" type="range" min="0.03" max="0.20" step="0.005" value="0.08"><output for="price"></output></div><small>USD per kWh. Philippine offshore auction cap: PHP 11 (about $0.19)<sup><a href="#s7">7</a></sup></small></div>
-        <div class="field"><label for="deaths">Bat deaths without protection</label><div class="row"><input id="deaths" type="range" min="1" max="50" step="0.5" value="5"><output for="deaths"></output></div><small>Per MW per year. US median 3.1, forested sites 6-10, up to ~50.<sup><a href="#s3">3</a></sup> No Southeast Asian data yet.</small></div>
+        <div class="field"><label for="deaths">Bat deaths without protection</label><div class="row"><input id="deaths" type="range" min="1" max="50" step="0.1" value="5"><output for="deaths"></output></div><small>Per MW per year. US median 3.1, forested sites 6-10, up to ~50.<sup><a href="#s3">3</a></sup> No Southeast Asian data yet.</small></div>
         <div class="field"><label for="cut">Bat deaths prevented</label><div class="row"><input id="cut" type="range" min="20" max="95" step="1" value="80"><output for="cut"></output></div><small>Simple curtailment 44-93%, smart 74-91%</small></div>
         <div class="field"><label for="loss">Electricity given up</label><div class="row"><input id="loss" type="range" min="0.2" max="8" step="0.1" value="1"><output for="loss"></output></div><small>Of yearly output. Simple ~2% (up to 8%); smart about half of that<sup><a href="#s4">4</a></sup></small></div>
         <div class="field"><label for="value">Crop value per bat per year</label><div class="row"><input id="value" type="range" min="0.25" max="20" step="0.25" value="1"><output for="value"></output></div><small>About $1 for rice pests in Thailand (see below). Higher where bats protect fruit or cash crops.</small></div>
@@ -156,6 +170,14 @@ footer .wrap { width: min(760px, 100% - 32px); margin-inline: auto; border-top: 
       </div>
       <p class="verdict" id="verdict"></p>
     </div>
+
+    <h2 class="display">Three scenarios side by side</h2>
+    <p>With smart curtailment (80% fewer deaths for 1% of output) and the default crop value. Every input marked <em>assumed</em> has no published figure for that place yet.</p>
+    <div class="table-wrap"><table class="compare" id="compare">
+      <thead><tr><th>Scenario</th><th>Capacity</th><th>Bats killed / year, unprotected</th><th>Bats saved / year</th><th>Power given up / year</th><th>Cost per bat saved</th></tr></thead>
+      <tbody></tbody>
+    </table></div>
+    <p>The United States figure lands close to the published national estimate (over 600,000 bats in 2012, with less wind than today), so the method is in the right range.<sup><a href="#s12">12</a></sup> For the Philippines, almost everything is unknown. Most of the planned growth is offshore, where bat deaths have barely been measured: studies find migrating bats far out at sea and some collisions, but no reliable rate.<sup><a href="#s14">14</a></sup> The build-out row assumes 2 bats per MW. It could be far lower, or higher on islands and coasts where bats commute and migrate.</p>
 
     <h2 class="display">Where the numbers come from</h2>
     <ul>
@@ -201,6 +223,9 @@ footer .wrap { width: min(760px, 100% - 32px); margin-inline: auto; border-top: 
       <li id="s8">Boyles, J. G., Cryan, P., McCracken, G. F. &amp; Kunz, T. H. (2011). Economic importance of bats in agriculture. <em>Science</em> 332, 41-42. <a href="https://pubs.usgs.gov/publication/70003553">USGS</a>.</li>
       <li id="s9">Maine, J. J. &amp; Boyles, J. G. (2015). Bats initiate vital agroecological interactions in corn. <em>PNAS</em>. <a href="https://news.siu.edu/2015/09/091415tjc15041.php">SIU news</a>.</li>
       <li id="s10">Bat pollination of durian in Sulawesi, about US$117 per hectare per season. <a href="https://forestsnews.cifor.org/embed-post/62538">CIFOR Forests News</a>.</li>
+      <li id="s12">Hayes, M. A. (2013). Bats killed in large numbers at United States wind energy facilities. <em>BioScience</em> 63(12). <a href="https://www.sciencedaily.com/releases/2013/11/131108091314.htm">ScienceDaily</a>.</li>
+      <li id="s13">US wind at the end of 2025: about 161 GW installed and 464 TWh generated (EIA data, via Berkeley Lab <a href="https://eta-publications.lbl.gov/sites/default/files/2026-08/figure_file_land-based_wind_energy_technology_update_2026_edition.pdf">Land-Based Wind Market Report 2026</a>). Philippines: about 0.5-0.7 GW installed, all onshore (<a href="https://oecd.org/en/publications/clean-energy-finance-and-investment-roadmap-of-the-philippines_7a13719d-en/full-report/component-7.html">OECD</a>, <a href="https://asiacleanenergyforum.adb.org/wp-content/uploads/2026/06/Accelerating-OSW-in-the-PH.pdf">ADB</a>); Philippine Energy Plan target of 19-50 GW offshore wind.</li>
+      <li id="s14">Bats at offshore wind farms: <a href="https://www.ncbi.nlm.nih.gov/pmc/articles/PMC8571582/">Oceanic records of North American bats</a> (Ecology and Evolution, 2021); <a href="https://noordzeeloket.nl/publish/pages/243930/vl-8b-assessment-of-bat-casualties-at-offshore-wind-farms-in-the-netherlands-and-cumulative-impa.pdf">Assessment of bat casualties at offshore wind farms in the Netherlands</a>.</li>
       <li id="s11">IFC Performance Standard 6 critical-habitat requirements as applied to wind projects, e.g. <a href="https://www3.dfc.gov/environment/eia/amunet/WindFarm/Biodiversity_Action_Plan.pdf">Amunet wind farm Biodiversity Action Plan</a>; <a href="https://thebiodiversityconsultancy.com/projects/demonstrating-no-net-loss-or-net-gain-for-a-wind-project-in-a-migratory-corridor">The Biodiversity Consultancy</a>.</li>
     </ol>
   </section>
@@ -217,21 +242,33 @@ footer .wrap { width: min(760px, 100% - 32px); margin-inline: auto; border-top: 
   const $ = id => document.getElementById(id);
   const ids = ["mw", "cf", "price", "deaths", "cut", "loss", "value", "years"];
   const fmt = {
-    mw: v => `${v} MW`, cf: v => `${v}%`, price: v => `$${(+v).toFixed(3)}`, deaths: v => `${v}/MW`,
+    mw: v => v >= 1000 ? `${(v / 1000).toFixed(1)} GW` : `${v} MW`, cf: v => `${v}%`, price: v => `$${(+v).toFixed(3)}`, deaths: v => `${v}/MW`,
     cut: v => `${v}%`, loss: v => `${(+v).toFixed(1)}%`, value: v => `$${(+v).toFixed(2)}`, years: v => `${v} yr`
   };
   const presets = { blanket: { cut: 60, loss: 2 }, smart: { cut: 80, loss: 1 } };
+  // capacities are sourced (source 13); prices and Philippine death rates are assumptions, labelled as such
+  const scenes = {
+    farm: { name: "One 100 MW farm", mw: 100, cf: 30, price: 0.08, deaths: 5,
+            note: "A typical onshore farm. Defaults from published studies; the death rate for Southeast Asia is assumed." },
+    us: { name: "United States today", mw: 161000, cf: 33, price: 0.04, deaths: 3.1,
+          note: "161 GW, 464 TWh in 2025 (capacity factor about 33%). Median 3.1 bats per MW per year. Price assumed: about $0.04/kWh wholesale." },
+    ph: { name: "Philippines today", mw: 600, cf: 30, price: 0.10, deaths: 5,
+          note: "About 0.5-0.7 GW, all onshore. Death rate and price assumed: there is no Philippine fatality monitoring yet." },
+    phfull: { name: "Philippines, full build-out", mw: 50600, cf: 40, price: 0.15, deaths: 2,
+              note: "Today's onshore plus the 50 GW top of the offshore target. Offshore death rate (2 per MW) and price assumed; the offshore auction cap is about $0.19/kWh." }
+  };
+  function calc(v) {
+    const mwh = v.mw * 8760 * v.cf / 100, revenue = mwh * 1000 * v.price, lost = revenue * v.loss / 100;
+    const killed = v.mw * v.deaths, saved = killed * v.cut / 100;
+    return { lost, killed, saved, crops: saved * v.value * v.years };
+  }
   const money = v => v >= 1e6 ? `$${(v / 1e6).toFixed(v >= 1e7 ? 0 : 1)}M` : v >= 1e4 ? `$${Math.round(v / 1e3)}k` : `$${Math.round(v).toLocaleString("en-US")}`;
   const num = v => Math.round(v).toLocaleString("en-US");
 
   function update() {
     const v = Object.fromEntries(ids.map(k => [k, +$(k).value]));
     ids.forEach(k => { document.querySelector(`output[for=${k}]`).textContent = fmt[k](v[k]); });
-    const mwh = v.mw * 8760 * v.cf / 100;                 // yearly output
-    const revenue = mwh * 1000 * v.price;
-    const lost = revenue * v.loss / 100;
-    const saved = v.mw * v.deaths * v.cut / 100;
-    const crops = saved * v.value * v.years;              // each year's saved bats keep protecting crops for years
+    const { lost, saved, crops } = calc(v);               // crops: each year's saved bats keep protecting crops for years
     $("r-saved").textContent = num(saved);
     $("r-cost").textContent = money(lost);
     $("r-share").textContent = `${v.loss.toFixed(1)}%`;
@@ -242,12 +279,25 @@ footer .wrap { width: min(760px, 100% - 32px); margin-inline: auto; border-top: 
       ? `With these numbers, the crops the saved bats protect are worth more than the power given up.`
       : `With these numbers, crop value covers ${Math.max(1, Math.round(100 * crops / lost))}% of the cost. The rest is the price of keeping ${num(saved * 20)} bats alive over the farm's life, at ${v.loss.toFixed(1)}% of its output.`;
   }
-  document.querySelectorAll(".modes button").forEach(b => b.addEventListener("click", () => {
-    document.querySelectorAll(".modes button").forEach(x => x.setAttribute("aria-pressed", x === b));
+  document.querySelectorAll("[data-mode]").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll("[data-mode]").forEach(x => x.setAttribute("aria-pressed", x === b));
     const p = presets[b.dataset.mode];
     $("cut").value = p.cut; $("loss").value = p.loss;
     update();
   }));
+  document.querySelectorAll("[data-scene]").forEach(b => b.addEventListener("click", () => {
+    document.querySelectorAll("[data-scene]").forEach(x => x.setAttribute("aria-pressed", x === b));
+    const sc = scenes[b.dataset.scene];
+    ["mw", "cf", "price", "deaths"].forEach(k => { $(k).value = sc[k]; });
+    $("scene-note").textContent = sc.note;
+    update();
+  }));
+  $("scene-note").textContent = scenes.farm.note;
+  $("compare").querySelector("tbody").innerHTML = ["us", "ph", "phfull"].map(k => {
+    const sc = scenes[k], r = calc({ ...sc, cut: 80, loss: 1, value: 1, years: 5 });
+    const cap = sc.mw >= 1000 ? `${(sc.mw / 1000).toFixed(sc.mw >= 10000 ? 0 : 1)} GW` : `${sc.mw} MW`;
+    return `<tr><td>${sc.name}</td><td>${cap}</td><td>${num(r.killed)}</td><td>${num(r.saved)}</td><td>${money(r.lost)}</td><td>${money(r.lost / r.saved)}</td></tr>`;
+  }).join("");
   ids.forEach(k => $(k).addEventListener("input", update));
   update();
 })();
