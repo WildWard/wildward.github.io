@@ -54,7 +54,7 @@ a { color: inherit; }
 .list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; padding-bottom: clamp(80px, 12vh, 140px); }
 .card { background: var(--canopy); border-radius: 20px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: transform .2s; }
 .card:hover { transform: translateY(-3px); }
-.card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.card img { width: 100%; height: auto; aspect-ratio: 16 / 9; object-fit: cover; }
 .card .body { padding: 26px 28px 30px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
 .tag { font: 500 .66rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); }
 .card h2 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0; }
