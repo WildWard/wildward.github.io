@@ -1,0 +1,118 @@
+<!doctype html>
+<html lang="en">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>WildWard Field Notes</title>
+<meta name="description" content="Articles and research notes from WildWard on wildlife, bats and conservation technology in Southeast Asia.">
+<meta property="og:type" content="website">
+<meta property="og:url" content="https://wildward.github.io/articles.html">
+<meta property="og:title" content="WildWard field notes">
+<meta property="og:description" content="Articles and research notes on wildlife, bats and conservation technology in Southeast Asia.">
+<meta property="og:image" content="https://wildward.github.io/og.jpg">
+<meta name="twitter:card" content="summary_large_image">
+<link rel="icon" type="image/png" href="favicon.png">
+<link rel="apple-touch-icon" href="apple-touch-icon.png">
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Archivo:wdth,wght@112,700;112,800;125,800&family=Figtree:ital,wght@0,400;0,600;1,400&family=Martian+Mono:wght@400;500&display=swap" rel="stylesheet">
+<style>
+:root {
+  --night: #0a1510;
+  --canopy: #10291f;
+  --leaf: #8fbf7a;
+  --wing: #e9a04b;
+  --bone: #eef0ea;
+  --fog: #9fb0a6;
+  --ink: #12201a;
+  --paper: #f3f5f1;
+  --display: "Archivo", "Arial Black", sans-serif;
+  --body: "Figtree", system-ui, sans-serif;
+  --mono: "Martian Mono", ui-monospace, monospace;
+}
+* { box-sizing: border-box; }
+body { margin: 0; background: var(--night); color: var(--bone); font: 400 1.0625rem/1.65 var(--body); -webkit-font-smoothing: antialiased; }
+img { display: block; max-width: 100%; }
+a { color: inherit; }
+:focus-visible { outline: 2px solid var(--wing); outline-offset: 3px; border-radius: 2px; }
+.wrap { width: min(1180px, 100% - 32px); margin-inline: auto; }
+.display { font-family: var(--display); font-weight: 800; font-stretch: 112%; text-transform: uppercase; letter-spacing: -.01em; line-height: .95; }
+.eyebrow { font: 500 .72rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); margin: 0 0 20px; }
+
+.top { display: flex; justify-content: space-between; align-items: center; padding: 22px clamp(16px, 4vw, 44px); }
+.wordmark { font: 800 1.15rem/1 var(--display); font-stretch: 125%; letter-spacing: .08em; text-transform: uppercase; text-decoration: none; display: flex; align-items: center; gap: 10px; }
+.wordmark img { width: 34px; height: auto; }
+.wordmark .ward { color: var(--wing); }
+.top nav a { font: 600 .9rem/1 var(--body); text-decoration: none; color: var(--fog); }
+.top nav a:hover { color: var(--bone); }
+
+.intro { padding: clamp(56px, 10vh, 110px) 0 clamp(40px, 6vh, 64px); }
+.intro h1 { font-size: clamp(2.6rem, 7vw, 5.4rem); margin: 0 0 20px; }
+.intro h1 span { color: var(--leaf); }
+.intro p:not(.eyebrow) { margin: 0; max-width: 38rem; color: #cdd6cf; font-size: 1.15rem; }
+
+.list { display: grid; grid-template-columns: repeat(2, 1fr); gap: 22px; padding-bottom: clamp(80px, 12vh, 140px); }
+.card { background: var(--canopy); border-radius: 20px; overflow: hidden; text-decoration: none; display: flex; flex-direction: column; transition: transform .2s; }
+.card:hover { transform: translateY(-3px); }
+.card img { width: 100%; aspect-ratio: 16 / 9; object-fit: cover; }
+.card .body { padding: 26px 28px 30px; display: flex; flex-direction: column; gap: 12px; flex: 1; }
+.tag { font: 500 .66rem/1 var(--mono); letter-spacing: .14em; text-transform: uppercase; color: var(--wing); }
+.card h2 { font-size: clamp(1.4rem, 2.6vw, 1.9rem); margin: 0; }
+.card p { margin: 0; color: #cdd6cf; }
+.card .more { margin-top: auto; font: 500 .75rem/1 var(--mono); color: var(--leaf); padding-top: 8px; }
+.card.log { background: transparent; border: 1.5px solid #1f3a2d; }
+
+footer { background: var(--paper); color: #56645c; padding: 28px 0 48px; font: 400 .66rem/1.7 var(--mono); }
+footer p { margin: 0 0 6px; }
+
+@media (max-width: 760px) { .list { grid-template-columns: 1fr; } }
+@media (prefers-reduced-motion: reduce) { .card { transition: none; } }
+</style>
+</head>
+<body>
+
+<header class="top">
+  <a class="wordmark" href="./" aria-label="WildWard home">
+    <img src="logo-shield.png" alt="" width="34" height="40">
+    <span>Wild<span class="ward">Ward</span></span>
+  </a>
+  <nav aria-label="Site"><a href="./">← Back to WildWard</a></nav>
+</header>
+
+<main>
+  <section class="intro wrap" aria-labelledby="title">
+    <p class="eyebrow">Field notes</p>
+    <h1 id="title" class="display">Articles &amp; <span>research</span></h1>
+    <p>What we're learning about Southeast Asia's wildlife and the tech that could help protect it. Sourced, honest about limits, and free to share.</p>
+  </section>
+
+  <section class="list wrap" aria-label="Articles">
+    <a class="card" href="bats-and-wind.html">
+      <img src="img/foxes.jpg" alt="Giant golden-crowned flying foxes hanging in a tree" width="2000" height="1333" loading="lazy">
+      <div class="body">
+        <span class="tag">Article · 25 Oct 2026 · 6 min</span>
+        <h2 class="display">Wind is coming to Asia's bat country</h2>
+        <p>What turbines do to bats, the fixes that already work elsewhere, and why Southeast Asia can't use them yet.</p>
+        <span class="more">Read the article →</span>
+      </div>
+    </a>
+    <a class="card log" href="https://github.com/WildWard/batlab/blob/main/FINDINGS.md">
+      <div class="body">
+        <span class="tag">Research log · updated 25 Oct 2026</span>
+        <h2 class="display">Teaching a bird AI to hear Asian bats</h2>
+        <p>Every test we've run, with the numbers and the failures: from 0 of 12 bats named by today's tools to 77% across 102 species, and the open problem of spotting species the model has never heard.</p>
+        <span class="more">Read on GitHub →</span>
+      </div>
+    </a>
+  </section>
+</main>
+
+<footer>
+  <div class="wrap">
+    <p>© 2026 WildWard · Made in the Netherlands</p>
+    <p>Photo: giant golden-crowned flying fox by Luke Marcos Imbong (<a href="https://creativecommons.org/licenses/by-sa/4.0/">CC BY-SA 4.0</a>), via Wikimedia Commons, resized.</p>
+  </div>
+</footer>
+
+</body>
+</html>
