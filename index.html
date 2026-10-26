@@ -116,6 +116,21 @@ td.wrong { color: #f08a7a; }
 .finding.honest strong { color: var(--wing); }
 .finding span { color: #c3d0c6; font-size: .98rem; line-height: 1.45; display: block; }
 
+/* the app, shown in a plain window frame */
+.app { margin-top: clamp(64px, 10vh, 110px); padding-top: clamp(40px, 6vh, 64px); border-top: 1px solid #1f3a2d; }
+.app-intro { max-width: 46rem; }
+.app h3 { font-size: clamp(1.6rem, 3vw, 2.5rem); margin: 0 0 18px; }
+.app-intro p:not(.eyebrow) { color: #cdd6cf; margin: 0; }
+.app .screen { margin: 36px 0 0; border-radius: 14px; overflow: hidden; border: 1px solid #253047; background: #0c111d; box-shadow: 0 30px 80px rgba(0,0,0,.45); }
+.app .screen .bar { display: flex; align-items: center; gap: 7px; padding: 11px 14px; background: #141b2b; border-bottom: 1px solid #253047; font: 400 .66rem/1 var(--mono); color: #8e98ae; }
+.app .screen .bar i { width: 10px; height: 10px; border-radius: 50%; background: #253047; }
+.app .screen .bar span { margin-left: 10px; }
+.app .screen img { width: 100%; height: auto; }
+.app-points { list-style: none; padding: 0; margin: 28px 0 0; display: grid; grid-template-columns: repeat(3, 1fr); gap: 24px; }
+.app-points li { color: #c3d0c6; font-size: .98rem; line-height: 1.5; padding-top: 14px; border-top: 2px solid var(--wing); }
+.app-points b { color: var(--bone); font: 500 .85rem var(--mono); }
+@media (max-width: 900px) { .app-points { grid-template-columns: 1fr; gap: 16px; } }
+
 /* every species next: full-bleed */
 .next { position: relative; min-height: 88svh; display: grid; align-items: end; overflow: hidden; }
 .next { background: var(--night); }
@@ -275,7 +290,7 @@ footer a { color: inherit; }
           <li><b>Open and fair.</b> Free to use. Researchers keep ownership of their data.</li>
         </ul>
         <p style="margin-top:28px"><a class="btn" href="https://github.com/WildWard/listen">Get WildWard Listen</a><a class="btn btn-ghost" href="bats-and-wind.html">Why it matters: bats &amp; wind</a></p>
-        <p class="note">Our free, offline desktop app for Windows (Mac in testing): drag in a folder of recordings and it finds every bat pass, measures every call, groups similar calls and learns from your labels. Says the genus when it isn't sure of the species, flags calls at frequencies no known species uses, maps your detectors and exports records ready for GBIF. In English, Bahasa Indonesia, Bahasa Melayu, Tiếng Việt, ไทย and Filipino. One-click install, no Python needed.</p>
+        <p class="note">Free and offline, for Windows (Mac in testing). One-click install, no Python needed. In English, Bahasa Indonesia, Bahasa Melayu, Tiếng Việt, ไทย and Filipino.</p>
       </div>
       <figure class="result" aria-labelledby="result-cap" style="margin:0">
         <div class="result-head">
@@ -299,6 +314,24 @@ footer a { color: inherit; }
         </table>
         <p class="note">Every guess is a European species, because that's what the model learned. It was never built for Asia. Small test, default settings.</p>
       </figure>
+    </div>
+
+    <div class="wrap app" aria-labelledby="app-title">
+      <div class="app-intro">
+        <p class="eyebrow">WildWard Listen · the app</p>
+        <h3 id="app-title" class="display">A survey night, reviewed one keystroke at a time</h3>
+        <p>Drag in a folder of recordings. Listen finds every bat pass, measures every call and suggests a species. You hear it slowed down, check it against the frequencies of species you know, and press Enter. Every label you give it makes the next suggestion better.</p>
+      </div>
+      <figure class="screen">
+        <div class="bar" aria-hidden="true"><i></i><i></i><i></i><span>WildWard Listen · Quick review</span></div>
+        <img src="img/listen-quick-review.jpg" alt="WildWard Listen's Quick review screen: a spectrogram of a bat pass with calls at 66.8 kHz, a ruler of known species frequencies beside it, and the suggestion Hipposideros diadema with a Confirm button" width="1600" height="885" loading="lazy">
+      </figure>
+      <ul class="app-points">
+        <li><b>Enter</b> confirms. <b>1-3</b> picks the next most likely species. <b>N</b> marks a bat that isn't in your library.</li>
+        <li>The ruler beside each call shows which known species call at that frequency, so a wrong guess is easy to spot.</li>
+        <li>Unsure of the species? It says the genus instead, and checks itself against your labels as you go.</li>
+      </ul>
+      <p class="note">Screenshot from a test night of ChiroVox recordings. Also in the app: groups of similar calls to label at once, unusual-frequency flags, night activity charts, detector maps and records exported ready for GBIF.</p>
     </div>
 
     <div class="wrap findings" aria-labelledby="findings-title">
