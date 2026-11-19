@@ -290,7 +290,7 @@ footer a { color: inherit; }
           <li><b>Open and fair.</b> Free to use. Researchers keep ownership of their data.</li>
         </ul>
         <p style="margin-top:28px"><a class="btn" href="https://github.com/WildWard/listen">Get WildWard Listen</a><a class="btn btn-ghost" href="bats-and-wind.html">Why it matters: bats &amp; wind</a></p>
-        <p class="note">Free and offline, for Windows (Mac in testing). One-click install, no Python needed. In English, Bahasa Indonesia, Bahasa Melayu, Tiếng Việt, ไทย and Filipino.</p>
+        <p class="note">Free and offline, for Windows (Mac in testing). One-click install, no Python needed. In English, Magyar, Bahasa Indonesia, Bahasa Melayu, Tiếng Việt, ไทย and Filipino.</p>
       </div>
       <figure class="result" aria-labelledby="result-cap" style="margin:0">
         <div class="result-head">
@@ -347,6 +347,20 @@ footer a { color: inherit; }
       </div>
       <p class="note">Early results, honest scope: 91 of Southeast Asia's 390+ species, mostly clean close-range recordings from the ChiroVox library, many species with only a few recordings. Real survey recordings are fainter and messier, and species the model has never heard are not handled yet, so field accuracy will be lower until we train on partners' survey data. Recording-level cross-validation; ranges are 95% confidence intervals. Updated 25 Oct 2026. ChiroVox data used locally for non-commercial research. Code, method and caveats: <a href="https://github.com/WildWard/batlab">github.com/WildWard/batlab</a>.</p>
     </div>
+
+    <div class="wrap findings" aria-labelledby="europe-title">
+      <div class="findings-intro">
+        <p class="eyebrow">New · Nov 2026 · Europe</p>
+        <h3 id="europe-title" class="display">First test on Hungarian and Bulgarian bats: how a call was recorded matters</h3>
+        <p>The ChiroVox team pointed out that free tools ignore how and where a call was recorded: the same bat sounds different in open space, in clutter or after a hand release. So we tested it, and ran the method on ChiroVox recordings from Hungary and Bulgaria for the first time: 374 recordings of 28 species.</p>
+      </div>
+      <div class="findings-grid">
+        <div class="finding honest"><strong>49%</strong><span>species right at Hungarian sites the model never heard, trained on Hungarian plus Bulgarian calls (43% with Hungarian calls alone). About 8 recordings per species: far too few for a real tool.</span></div>
+        <div class="finding"><strong>70%</strong><span>of horseshoe bat recordings named right when the model learned in Bulgaria and was tested in Hungary (20 recordings). For FM and QCF bats it was 33%. Constant-frequency calls travel, the others need home data.</span></div>
+        <div class="finding"><strong>5-18</strong><span>points lost on calls recorded one way (hand release, flight tent, in the hand) when the reference library holds none recorded that way, against a fair control. 1,072 Southeast Asian recordings.</span></div>
+      </div>
+      <p class="note">What we did with it: WildWard Listen now notes the recording conditions of every survey (habitat, method, microphone height) and writes them into every export, so labelled passes become documented reference calls. It does not use them for identification yet: in a first test, three simple ways of telling the classifier the recording method did not improve it. The app is also available in Hungarian. Small samples; most Hungarian recordings come from one recordist and one detector. ChiroVox data used locally for non-commercial research. Details and caveats: Tests 13 to 15 at <a href="https://github.com/WildWard/batlab">github.com/WildWard/batlab</a>. Updated 19 Nov 2026.</p>
+    </div>
   </section>
 
   <section class="notes" aria-labelledby="notes-title">
@@ -385,7 +399,7 @@ footer a { color: inherit; }
       <h2 id="road-title" class="display">The road to the field</h2>
       <ol>
         <li class="done"><span class="when">Done</span><h3>Test the models</h3><p>A leading free tool: 0 of 12. Ours: 78% on 91 species from 85 sites.</p></li>
-        <li class="done"><span class="when">Done</span><h3>Build the tool</h3><p>WildWard Listen: a free offline desktop app that finds, measures and groups every call, in six languages.</p></li>
+        <li class="done"><span class="when">Done</span><h3>Build the tool</h3><p>WildWard Listen: a free offline desktop app that finds, measures and groups every call, in seven languages.</p></li>
         <li class="now"><span class="when">Now</span><h3>Find partners</h3><p>Team up with researchers who hold identified recordings from many sites.</p></li>
         <li><span class="when">Then</span><h3>Train and check</h3><p>Build a classifier for Southeast Asian species and publish the accuracy openly.</p></li>
         <li><span class="when">Later</span><h3>Into the field</h3><p>Put it to work on real surveys across Southeast Asia.</p></li>
@@ -413,7 +427,7 @@ footer a { color: inherit; }
         <div class="contact-card">
           <div>
             <h2 id="contact-title" class="display">Work with us</h2>
-            <p>Researchers, NGOs, and anyone with bat recordings from Southeast Asia: tell us what slows your work down. We reply within a few days.</p>
+            <p>Researchers, NGOs, and anyone with bat recordings from Southeast Asia or Europe: tell us what slows your work down.</p>
           </div>
           <div class="contact-actions">
             <a class="btn" href="mailto:wildward.org@gmail.com">Email wildward.org@gmail.com</a>
